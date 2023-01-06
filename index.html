@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="main.css">
     <title>TODOs</title>
+    <script defer src="sidebar.js"></script>
+    <script defer src="utils/add_func.js"></script>
+    <script defer src="utils/textarea_height.js"></script>
+    <script defer src="utils/add_cancle_func.js"></script>
+    <script defer src="init_values.js"></script>
 </head>
 <header class="header">
     <h1>TO-DO LIST</h1>
-    <input type="checkbox" id="menuicon">
-    <label for="menuicon">
+    <div id="menuicon">
         <img src="./icons/menu_icon.svg" alt="">
-    </label>
+    </div>
 </header>
 
 <body>
@@ -21,54 +25,36 @@
         <div class="status">
             <div class="status_title">
                 <div class="status_name">
-                    <span>해야할 일</span>
+                    <span id="asd">해야할 일</span>
                     <div class="status_count">2</div>
                 </div>
                 <div class="status_icons">
-                    <input type="checkbox" id="todo_addicon">
+                    <!-- <input type="checkbox" id="todo_addicon">
                     <label for="todo_addicon">
                         <img id src="./icons/add_icon.svg" alt="">
-                    </label>
-                    <input type="checkbox" id="todo_closeicon">
+                    </label> -->
+                    <div class="addicons" id="todo_addicon">
+                        <img src="./icons/add_icon.svg" alt="">
+                    
+                    </div>
+                    <div class="closeicons" id="todo_closeicon">
+                        <img src="./icons/close_icon.svg" alt="">
+                    
+                    </div>
+                    <!-- <input type="checkbox" id="todo_closeicon">
                     <label for="todo_closeicon">
                         <img src="./icons/close_icon.svg" alt="">
-                    </label>
+                    </label> -->
                 </div>
             </div>
-            <ol class="status_list">
-                <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">GiHub 공부하기</div>
-                        <div class="work_box_main">add, commit, push</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="todo_box_closeicon">
-                        <label for="todo_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li>
-                <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">블로그에 포스팅할 것</div>
-                        <div class="work_box_main">*GitHub 공부내용 <br> *모던 자바스크립트 1장 공부내용</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="todo_box_closeicon">
-                        <label for="todo_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li>
+            <ol class="status_list todo" id="todo_list">
+                <!-- 리스트 -->
             </ol>
         </div>
-
         <!-- 하고 있는 일 -->
 
         <div class="status">
-            <div class="status_title">
+            <div class="status_title doing">
                 <div class="status_name">
                     <span>하고 있는 일</span>
                     <div class="status_count">1</div>
@@ -84,39 +70,14 @@
                     </label>
                 </div>
             </div>
-            <ol class="status_list">
-                <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">HTML/CSS 공부하기</div>
-                        <div class="work_box_main">input 태그 실습</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="doing_box_closeicon">
-                        <label for="doing_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li>
-                <!-- <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">블로그에 포스팅할 것</div>
-                        <div class="work_box_main">*GitHub 공부내용 <br> *모던 자바스크립트 1장 공부내용</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="doing_box_closeicon">
-                        <label for="doing_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li> -->
+            <ol class="status_list doing" id="doing_list">
+                <!-- 리스트 -->
             </ol>
         </div>
 
         <!-- 완료한 일 -->
         <div class="status">
-            <div class="status_title">
+            <div class="status_title done">
                 <div class="status_name">
                     <span>완료한 일 </span>
                     <div class="status_count">0</div>
@@ -132,35 +93,21 @@
                     </label>
                 </div>
             </div>
-            <ol class="status_list">
-                <!-- <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">GiHub 공부하기</div>
-                        <div class="work_box_main">add, commit, push</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="done_box_closeicon">
-                        <label for="done_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li>
-                <li class="work_box">
-                    <div class="work_box_contents">
-                        <div class="work_box_title">블로그에 포스팅할 것</div>
-                        <div class="work_box_main">*GitHub 공부내용 <br> *모던 자바스크립트 1장 공부내용</div>
-                        <div class="work_box_author">author by web</div>
-                    </div>
-                    <div class="work_box_icon">                        
-                        <input type="checkbox" id="done_box_closeicon">
-                        <label for="done_box_closeicon">
-                            <img src="./icons/box_close_icon.svg" alt="">
-                        </label>
-                    </div>
-                </li> -->
+            <ol class="status_list done" id="done_list">
+                <!-- 리스트 -->
             </ol>
         </div>
+    </div>
+    <div>
+        <nav id="sidebar">
+            <button id="sidebar_close">닫기</button>
+            <oi>
+                <li>box</li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </oi>
+        </nav>
     </div>
 </body>
 
