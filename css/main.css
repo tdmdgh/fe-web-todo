@@ -1,4 +1,4 @@
-:root{
+:root {
     font-family: 'Noto Sans KR';
     font-style: normal;
     --font-weight-header: 400;
@@ -6,13 +6,14 @@
     --line-height-header: 26px;
 
     /* colors */
-    --category-counter-color:#BDBDBD;
-    --work-box-color:#FFFFFF;
-    --work-box-text-color:#010101;
-    --btn-general-color:#0075DE;
+    --category-counter-color: #BDBDBD;
+    --work-box-color: #FFFFFF;
+    --work-box-delete-color: #FFEEEC;
+    --work-box-text-color: #010101;
+    --btn-general-color: #0075DE;
     --btn-cliked-color: #00529B;
-    --btn-unfocused-color:#86C6FF;
-    --btn-unfocused-text-color:rgba(255, 255, 255, 0.4);
+    --btn-unfocused-color: #86C6FF;
+    --btn-unfocused-text-color: rgba(255, 255, 255, 0.4);
 }
 
 
@@ -42,6 +43,7 @@
     position: relative;
     text-align: center;
 }
+
 /* main body */
 .body_main {
     flex-wrap: wrap;
@@ -52,15 +54,17 @@
     margin: 24px 80px;
     /* flex: none; */
 }
+
 /* category hedaer */
-ul{
-    list-style:none;
+ul {
+    list-style: none;
     padding: 0;
 }
 
 .category_column {
     margin-right: 16px;
 }
+
 .category_header {
     display: flex;
     background: aqua;
@@ -99,7 +103,8 @@ ul{
     display: flex;
     align-items: center;
 }
-.category_header_icons  img {
+
+.category_header_icons img {
     display: flex;
     height: 14px;
     width: 14px;
@@ -109,12 +114,14 @@ ul{
     margin: 0 8px;
     padding: 3px;
 }
-.category_addicons:hover{ 
+
+.category_addicons:hover {
     /* change into blue */
     filter: invert(30%) sepia(56%) saturate(2589%) hue-rotate(191deg) brightness(96%) contrast(104%);
     transition: 0;
 }
-.category_closeicons:hover{
+
+.category_closeicons:hover {
     /* change into red */
     filter: invert(20%) sepia(68%) saturate(5955%) hue-rotate(354deg) brightness(104%) contrast(124%);
     transition: 0;
@@ -143,10 +150,20 @@ ul{
     padding: 8px;
 }
 
-.work_box_row{
+.work_box.editing {
+    border: 1px solid var(--btn-general-color);
+}
+
+.work_box.delete {
+    border: 1px solid red;
+    background: var(--work-box-delete-color);
+}
+
+.work_box_row {
     border: 2px solid #0088ff;
     display: flex;
 }
+
 .work_box_contents {
     position: relative;
     display: flex;
@@ -155,13 +172,15 @@ ul{
     width: 100%;
     margin: 8px;
     justify-content: space-between;
-    color: var( --work-box-text-color);
+    color: var(--work-box-text-color);
     font-weight: 400;
 }
-.work_box_contents > *{
+
+.work_box_contents>* {
     outline: none;
 }
-.work_box_icon{
+
+.work_box_icon {
 
     display: flex;
     height: 14px;
@@ -171,6 +190,16 @@ ul{
     border: 1px solid grey;
     margin: 8px 8px 0 0;
 }
+
+.work_box_icon:hover {
+    filter: invert(20%) sepia(68%) saturate(5955%) hue-rotate(354deg) brightness(104%) contrast(124%);
+    transition: 0;
+}
+
+/* .work_box_icon:hover ~.work_box{
+    border: 1px solid red;
+} */
+
 .work_box_title {
     display: flex;
     line-height: 23px;
@@ -178,7 +207,8 @@ ul{
     font-size: 16px;
 }
 
-.work_box_title_input {
+/* .work_box_title_input */
+input {
     display: none;
     border: 0;
     line-height: 23px;
@@ -216,48 +246,62 @@ ul{
     display: none;
     justify-content: space-between;
 }
-.work_box_buttons > button{
+
+/* .work_box_buttons >  */
+button {
     width: 100%;
     margin: 4px;
     padding: 10px;
-}
-    /* 취소 버튼 */
-.add_cancel_button {
     position: relative;
-    background-color:#E0E0E0;
-    color: #828282;
-    border:none; 
-    border-radius:6px; 
-    min-height:20px; 
-    min-width: 100px;   
+    border: none;
+    border-radius: 6px;
+    min-height: 20px;
+    min-width: 100px;
 }
+
+/* 취소 버튼 */
+.add_cancel_button {
+    /* position: relative; */
+    background-color: #E0E0E0;
+    color: #828282;
+    /* border:none;  */
+    /* border-radius:6px; 
+    min-height:20px; 
+    min-width: 100px;    */
+}
+
 .add_cancel_button:hover {
-    background-color:rgb(217, 217, 217);
+    background-color: rgb(217, 217, 217);
     color: #717171;
     transition: 0.7s;
 }
+
 .add_cancel_button:active {
     color: black;
     background-color: rgb(197, 197, 197);
 }
+
 /* 등록 버튼 */
 .add_register_button {
-    position: relative;
-    background-color:var(--btn-unfocused-color);
+    /* position: relative; */
+    background-color: var(--btn-unfocused-color);
     color: var(--btn-unfocused-text-color);
-    border:none; 
+    /* border:none; 
     border-radius:6px; 
     min-height:20px; 
-    min-width: 100px;     
+    min-width: 100px;      */
 }
-.add_register_button .ready{
+
+.add_register_button.ready {
 
     color: white;
-    background-color:var(--btn-general-color);
+    background-color: var(--btn-general-color);
     transition: 0.7s;
 }
-.add_register_button .ready :active {
-    background-color:var(--btn-cliked-color);transition: 0.7s;
+
+.add_register_button :active {
+    background-color: var(--btn-cliked-color);
+    transition: 0.7s;
 }
 
 
@@ -265,50 +309,60 @@ ul{
 .adding .work_box_title_input {
     display: flex;
 }
+
 .adding .work_box_main_input {
     display: flex;
 }
+
 .adding .work_box_title {
     display: none;
 }
+
 .adding .work_box_main {
     display: none;
 }
+
 .adding .work_box_author {
     display: none;
 }
-.adding .work_box_icon{
+
+.adding .work_box_icon {
     display: none;
 }
-.adding .add_function_buttons{
+
+.adding .add_function_buttons {
     display: flex;
 }
-.adding .work_box_buttons{
+
+.adding .work_box_buttons {
     display: flex;
 }
 
 
 /* floating button */
-.floating_btn{
+.floating_btn {
     cursor: pointer;
     float: right;
     display: flex;
     margin: 50px;
     position: absolute;
-    right: 0px; bottom: 0px;
+    right: 0px;
+    bottom: 0px;
     background-color: var(--btn-general-color);
-    width:64px;
-	height:64px;
+    width: 64px;
+    height: 64px;
     justify-content: center;
     align-items: center;
     border-radius: 50px;
     box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
-.floating_add_icon{
+
+.floating_add_icon {
     width: 23px;
     height: 23px;
 
 }
+
 /* modal */
 .modal {
     position: absolute;
@@ -318,31 +372,69 @@ ul{
     width: 100%;
     height: 100%;
 
+    /* display: block; */
     display: none;
-
     background-color: rgba(0, 0, 0, 0.4);
-  }
-  .modal_body {
+}
+/* {
+
+    border: 1px solid var(--work-box-color);
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-height: 100px;
+    background: var(--work-box-color);
+    box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.302);
+    border-radius: 6px;
+    justify-content: center;
+    margin: 8px 0;
+    padding: 8px;
+} */
+.modal_body {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 50%;
     left: 50%;
-  
-    width: 40px;
-    height: 60px;
-  
-    padding: 40px;
-  
-    text-align: center;
-  
+
+    width: 400px;
+    min-height: 90px;
+    padding: 24px;
+    vertical-align: middle;
+
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
+    border-radius: 6px;
     box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-  
+
     transform: translateX(-50%) translateY(-50%);
-  }
-  .modal_body > input{
+}
+
+.modal_body>input {
+    
+    outline: none;
     display: inline;
-  }
+}
+
+.modal_btns {
+    margin-top: auto;
+    margin-left: auto;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    margin-right: 0;
+}
+.modal_btns .modal_delete_btn{
+    display: none;
+}
+.modal_btns .modal_register_btn{
+    color: white;
+    background-color: var(--btn-general-color);
+}
+.modal_register_btn:active {
+    background-color: var(--btn-cliked-color);
+    transition: 0.7s;
+}
+
 /* side bar */
 #sidebar {
     width: 250px;

@@ -1,6 +1,6 @@
 export default function show_modal(){
 const modal = document.querySelector('.modal');
-const btnOpenPopup = document.querySelector('#floating_add_icon');
+const btnOpenPopup = document.querySelector('.floating_btn');
 
 btnOpenPopup.addEventListener('click', () => {
     modal.style.display = 'block';
