@@ -27,7 +27,7 @@ export function fba_event() {
     })
 }
 export function initialize_values() {
-    const body_main = document.querySelector('.body_main');
+    const category_list = document.querySelector('.category_list');
     const todo = new Category("해야할 일")
     const todo_1 = new WorkBox(todo)
     todo_1.title = "GitHub 공부하기"
@@ -46,7 +46,7 @@ export function initialize_values() {
     doing.work_box_list.push(doing_1.createNode());
 
     const done = new Category("완료한 일")
-    body_main.append(todo.createNode())
-    body_main.append(doing.createNode())
-    body_main.append(done.createNode())
+    category_list.append(todo.createNode())
+    category_list.append(doing.createNode())
+    category_list.append(done.createNode())
 }

@@ -45,7 +45,7 @@
 }
 
 /* main body */
-.body_main {
+.category_list {
     flex-wrap: wrap;
     display: flex;
     /* justify-content: space-between; */

@@ -69,9 +69,9 @@ Modal.prototype.register_btn_event = function () {
     this.node.querySelector(".modal_register_btn").addEventListener('click', () => {
         const title = document.querySelector(".modal_input").value
         if (title.length == 0) return
-        const body_main = document.querySelector('.body_main');
+        const category_list = document.querySelector('.category_list');
         const new_category = new Category(title)
-        body_main.append(new_category.createNode())
+        category_list.append(new_category.createNode())
         this.disappear();
 
 
