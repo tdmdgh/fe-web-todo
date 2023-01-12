@@ -69,3 +69,8 @@ action에 따라 텍스트 내용이 달라짐.
 5. work_box 삭제
 6. category 삭제
 - [ ] 7.  work_box 이동 알림 (진행 중)
+
+## 5. 특이사항
+각 클래스 안에 node라는 변수를 가지고 있다.  
+값을 수정하거나, 삭제, 추가 등을 할 때, this.node를 활용해서 기능을 수행한다.  
+ex) this.node.remove(), this.node.classList.add("edit") 등 이런 식으로 활용 가능하다.
