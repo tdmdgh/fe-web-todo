@@ -1,83 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="./css/main.css">
     <title>TODOs</title>
-    <script defer src="./js/textarea_height.js"></script>
+    <!-- <script defer src="./js/textarea_height.js"></script> -->
+    <script defer type="module" src="./js/main.js"></script>
 </head>
 <header class="header">
     <h1>TO-DO LIST</h1>
     <div id="menuicon">
-        <img src="./icons/menu_icon.svg" alt="">
+        <img src="./assets/menu_icon.svg" alt="">
     </div>
 </header>
 
 <body>
-    <ul class="body_main">
-        <!-- 해야할 일 -->
-        <li class="category_column ">
-            <div class="category_header">
-                <div class="category_name">
-                    <span>해야할 일</span>
-                    <div class="category_count">2</div>
-                </div>
-                <div class="category_header_icons">
-                    <img class="category_addicons" src="./icons/category_add_icon.svg" alt="">
-                    <img class="category_closeicons" src="./icons/close_icon.svg" alt="">
-                </div>
-            </div>
-            <ul class="work_box_list">
-
-            </ul>
-        </li>
-        <!-- 해야할 일 -->
-        <li class="category_column ">
-            <div class="category_header">
-                <div class="category_name">
-                    <span>해야할 일22</span>
-                    <div class="category_count">2</div>
-                </div>
-                <div class="category_header_icons">
-                    <img class="category_addicons" src="./icons/category_add_icon.svg" alt="">
-                    <img class="category_closeicons" src="./icons/close_icon.svg" alt="">
-                </div>
-            </div>
-            <ul class="work_box_list">
-
-            </ul>
-        </li>
-
-    </ul>
-    <div class="modal">
-        <div class="modal_body">
-            <input type="text" class="work_box_title_input " placeholder="제목을 입력하세요">
-            <div class="modal_btns">
-                <button class="modal_cancel_btn">취소</button>
-                <button class="modal_delete_btn">삭제</button>
-                <button class="modal_register_btn">등록</button>
+    <ul class="body_main"></ul>
+    <div class="modal"></div>
+    <div class="floating_btn">
+        <img id="floating_add_icon" src="./assets/add_icon.svg" alt="">
+    </div>
+    <!-- <div class="active" id="sidebar"> -->
+    <div id="sidebar">
+        <div class="sidebar_icon">
+            <div id="sidebar_close">
+                <img src="./assets/sidebar_close_icon.svg" alt="">
             </div>
         </div>
-
-    </div>
-    <div class="floating_btn">
-        <img id="floating_add_icon" src="./icons/add_icon.svg" alt="">
-    </div>
-    <div>
-        <nav id="sidebar">
-            <button id="sidebar_close">닫기</button>
-            <oi>
-                <li>box</li>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-            </oi>
-        </nav>
+        <oi class="log_list"> </oi>
     </div>
 </body>
 
-<script type="module" src="./js/main.js"></script>
 
 </html>

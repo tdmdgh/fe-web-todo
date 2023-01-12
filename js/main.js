@@ -1,19 +1,5 @@
-import sidebar_event from "./sidebar.js";
-import show_modal from "./floating_btn.js";
-import add_work_box_event from "./add_work_box_event.js";
-// import add_cancel from "./add_cancel.js";
-import WorkBox from "./WorkBox.js";
-// import resize from "./textarea_height.js";
+import { sidebar_event, fba_event, initialize_values } from "./utils.js";
+
 sidebar_event();
-show_modal();
-
-//category추가될때마다 add listener 추가
-// add_work_box();
-
-
-// add_cancel();
-// add_register_btn();
-// const work_box = new WorkBox("GitHub 공부하기","add, commit, push","시간")
-// work_box.createNode();
-// work_box.cancel_add();
-add_work_box_event(); //category의 매소드
+fba_event();
+initialize_values();
