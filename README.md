@@ -33,7 +33,8 @@
     ├── FAB
     └── Sidebar
         ├── Sidebar_Icon(닫기 버튼)
-        └── Log_list
+        └── Log_list (로그 노드 리스트)
+            └── Log
 ``` 
 
 ## 4. 설계
