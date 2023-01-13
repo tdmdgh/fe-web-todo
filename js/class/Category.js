@@ -1,7 +1,6 @@
 
 import { category_header, category_template } from "../templates.js";
 import WorkBox from "./WorkBox.js";
-import Modal from "./Modal.js";
 import Log from "./Log.js";
 export default function Category(title = "") {
     this.title = title;

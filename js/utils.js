@@ -10,16 +10,16 @@ export function br2newline(str) {
     return str.replaceAll('<br>', '\n');
 }
 
-export  function sidebar_event(){
-    document.getElementById('menuicon').addEventListener('click', function(){
+export function sidebar_event() {
+    document.getElementById('menuicon').addEventListener('click', function () {
         document.getElementById('sidebar').classList.add('active');
-        });
-    document.getElementById('sidebar_close').addEventListener('click', function(){
+    });
+    document.getElementById('sidebar_close').addEventListener('click', function () {
         document.getElementById('sidebar').classList.remove('active');
-        });
-    }
-    
-export function fba_event() {
+    });
+}
+
+export function fab_event() {
     const floating_btn = document.querySelector('.floating_btn');
     floating_btn.addEventListener('click', () => {
         const modal = new Modal("add",)

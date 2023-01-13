@@ -30,7 +30,7 @@
     │       │   └── Work_Box_Icons(삭제, 수정 아이콘)
     │       └── Work_Box_Buttons(취소, 등록, 수정 버튼)
     ├── Modal
-    ├── FBA
+    ├── FAB
     └── Sidebar
         ├── Sidebar_Icon(닫기 버튼)
         └── Log_list
