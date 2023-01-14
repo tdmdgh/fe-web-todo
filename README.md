@@ -12,6 +12,8 @@
 - [ ] 드래그 앤 드랍: 같은 칼럼내 이동
 - [ ] 드래그 앤 드랍: 다른 칼럼내 이동
 - [ ] 카테고리 이름 바꿀 때, 현재 엔터가 trigger임. input 태그 이외에 부분을 클릭하는 것으로 저장되는 것이 요구사항.
+- [ ] text area, input area 수정시에 placeholder에 기존 텍스트 저장
+- [ ] inputcheck trim 기능
 ## 2. Term
 **Work_Box: 카드 하나**  
 **Category: 카테고리 이름과 Work_Box 리스트로 구성되어 있음.**  

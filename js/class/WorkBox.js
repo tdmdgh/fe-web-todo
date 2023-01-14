@@ -1,6 +1,7 @@
 import { newline2br, br2newline } from "../utils.js";
 import Modal from "./Modal.js";
 import Log from "./Log.js";
+import { store } from "../Store.js";
 export default function WorkBox(category, time = "") {
     this.title = "";
     this.content = "";
@@ -41,8 +42,56 @@ WorkBox.prototype.createNode = function () {
     this.delete_hover();
     this.delete_btn_event();
     this.input_check();
+
+    this.dragNdrop();
     return this.node;
 }
+
+WorkBox.prototype.dragNdrop = function () {
+    // this.node.addEventListener('click', () =>{
+    //     console.log("clcik")
+    // })
+    let first_mouse_x=0;
+    this.node.addEventListener('mousedown', (e) =>{
+        const clientRect = this.node.getBoundingClientRect();
+        console.log("_________________")
+        console.log(clientRect.bottom)
+        console.log(clientRect.height)
+        console.log(clientRect.left)
+        console.log(clientRect.right)
+        console.log(clientRect.top)
+        console.log(clientRect.width)
+        console.log(clientRect.x)
+        console.log(clientRect.y)
+        // console.log("down")
+        // first_mouse_x = e.offsetX;
+        // console.log(first_mouse_x)
+        // this.node.classList.add("moving")
+        // this.node.style()="position: absolute;right: 0px;bottom: 0px;)"
+    })
+    this.node.addEventListener('mousemove', (e) =>{
+        // console.log(first_mouse_x - e.pageX)
+        // console.log(first_mouse_x - e.offsetX)
+
+
+        // console.log(e.pageX)
+        // console.log(e.clientX)
+        // console.log(e.screenX)
+        // console.log(e.movementX)
+        // console.log("press")
+    })
+    // this.node.addEventListener('mouseup', () =>{
+    //     console.log("up")
+    // })
+}
+
+
+
+
+
+
+
+
 WorkBox.prototype.register_add = function () {
     const add_register_btn = this.node.querySelector(".add_register_button");
     add_register_btn.addEventListener('click', () => {
@@ -68,6 +117,7 @@ WorkBox.prototype.register_add = function () {
             log.setPrevWT(prev_title);
             log.setWT(this.title);
             log.register();
+            store.log_list.push(log);
             return
         }
         this.category.work_box_list.unshift(this.node)
@@ -78,6 +128,7 @@ WorkBox.prototype.register_add = function () {
         log.setCT(this.category.title);
         log.setWT(this.title);
         log.register();
+        store.log_list.push(log);
     })
 }
 WorkBox.prototype.resize_textarea = function (obj) {

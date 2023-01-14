@@ -166,7 +166,9 @@ ul {
     margin: 8px 0;
     padding: 8px;
 }
-
+.work_box.moving{
+    position: absolute;
+}
 .work_box.editing {
     border: 1px solid var(--btn-general-color);
 }

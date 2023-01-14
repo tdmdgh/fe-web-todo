@@ -1,4 +1,4 @@
-
+import { time_diff } from "../utils.js";
 export default function Log(action, time) {
     this.action = action;
     this.content = "";
@@ -55,6 +55,7 @@ Log.prototype.createNode = function () {
     this.node = document.createElement('li')
     this.node.classList.add("log");
     this.createContent();
+    // this.calculateTime();
     this.node.innerHTML =
         `<div class="profile">
         <img src="./assets/profile.png" alt="">
@@ -70,4 +71,8 @@ Log.prototype.register = function () {
     this.createNode();
     const log_list = document.querySelector(".log_list");
     log_list.prepend(this.node)
+}
+
+Log.prototype.update_time = function (){
+    this.node.querySelector(".log_time").innerHTML = time_diff(this.time);
 }

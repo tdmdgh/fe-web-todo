@@ -2,6 +2,7 @@
 import { category_header, category_template } from "../templates.js";
 import WorkBox from "./WorkBox.js";
 import Log from "./Log.js";
+import { store } from "../Store.js";
 export default function Category(title = "") {
     this.title = title;
     this.work_box_list = [];
@@ -52,6 +53,8 @@ Category.prototype.edit_done_title_event = function () {
             log.setPrevCT(prev_title);
             log.setCT(this.title);
             log.register();
+            
+            store.log_list.push(log);
         }
     });
     // let focusEle = document.activeElement;
@@ -90,5 +93,6 @@ Category.prototype.close_btn_event = function () {
         const log = new Log("remove_CT", new Date())
         log.setCT(this.title);
         log.register();
+        store.log_list.push(log);
     });
 }

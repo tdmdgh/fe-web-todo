@@ -1,5 +1,6 @@
 import Category from "./Category.js";
 import Log from "./Log.js";
+import { store } from "../Store.js";
 export default function Modal(type, deleting_node, category, wb_title) {
     this.type = type;
     this.content = "";
@@ -63,6 +64,7 @@ Modal.prototype.delete_btn_event = function () {
         log.setCT(this.category.title);
         log.setWT(this.wb_title);
         log.register();
+        store.log_list.push(log);
     })
 }
 Modal.prototype.register_btn_event = function () {
@@ -78,5 +80,6 @@ Modal.prototype.register_btn_event = function () {
         const log = new Log("add_CT", new Date())
         log.setCT(title);
         log.register();
+        store.log_list.push(log);
     })
 }

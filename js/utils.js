@@ -2,17 +2,37 @@
 import WorkBox from "./class/WorkBox.js";
 import Category from "./class/Category.js";
 import Modal from "./class/Modal.js";
-
+import { store } from "./Store.js";
 export function newline2br(str) {
     return str.replaceAll('\n', '<br>');
 }
 export function br2newline(str) {
     return str.replaceAll('<br>', '\n');
 }
+export function time_diff(date) {
+    const now = new Date();
+    const time_diff = Math.floor((now.getTime() - date.getTime()) / 1000 / 60);
+    if (time_diff < 1) return '방금 전';
+    if (time_diff < 60) {
+        return `${time_diff}분 전`;
+    }
 
+    const time_diff_hour = Math.floor(time_diff / 60);
+    if (time_diff_hour < 24) {
+        return `${time_diff_hour}시간 전`;
+    }
+
+    const time_diff_day = Math.floor(time_diff_hour / 24);
+    if (time_diff_day < 365) {
+        return `${time_diff_day}일 전`;
+    }
+
+    return `${Math.floor(time_diff_day / 365)}년 전`;
+}
 export function sidebar_event() {
     document.getElementById('menuicon').addEventListener('click', function () {
         document.getElementById('sidebar').classList.add('active');
+        store.log_list.forEach((e)=>{e.update_time()})
     });
     document.getElementById('sidebar_close').addEventListener('click', function () {
         document.getElementById('sidebar').classList.remove('active');
