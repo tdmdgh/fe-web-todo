@@ -60,7 +60,9 @@ Modal.prototype.delete_btn_event = function () {
         this.disappear();
         this.category.count_update();
 
-        const log = new Log("remove", new Date())
+        const log = new Log()
+        log.setAction("remove_WB");
+        log.setTime(new Date());
         log.setCT(this.category.title);
         log.setWT(this.wb_title);
         log.register();
@@ -78,8 +80,11 @@ Modal.prototype.register_btn_event = function () {
 
 
         const log = new Log("add_CT", new Date())
+        log.setAction("add_CT")
+        log.setTime(new Date())
         log.setCT(title);
         log.register();
         store.log_list.push(log);
+        store.category_list.push(new_category);
     })
 }

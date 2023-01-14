@@ -3,6 +3,7 @@ import WorkBox from "./class/WorkBox.js";
 import Category from "./class/Category.js";
 import Modal from "./class/Modal.js";
 import { store } from "./Store.js";
+import Log from "./class/Log.js";
 export function newline2br(str) {
     return str.replaceAll('\n', '<br>');
 }
@@ -36,6 +37,7 @@ export function sidebar_event() {
     });
     document.getElementById('sidebar_close').addEventListener('click', function () {
         document.getElementById('sidebar').classList.remove('active');
+        store.category_list.forEach((e)=>{console.log(e)})
     });
 }
 
@@ -47,26 +49,82 @@ export function fab_event() {
     })
 }
 export function initialize_values() {
-    const category_list = document.querySelector('.category_list');
-    const todo = new Category("해야할 일")
-    const todo_1 = new WorkBox(todo)
-    todo_1.title = "GitHub 공부하기"
-    todo_1.content = "add, commit, push"
-    todo.work_box_list.push(todo_1.createNode());
+    let init={
+        "Categories":[
+            {
+                "Title":"해야할 일",
+                "WorkBoxes":[{
+                    "Title":"블로그에 포스팅할 것",
+                    "Content":"GitHub 공부내용<br>모던 자바스크립트 공부내용",
+                    "Author":"web"
+                },
+                {
+                    "Title":"GitHub 공부하기",
+                    "Content":"add, commit, push",
+                    "Author":"web"
+                }]
+            },
+            {
+                "Title":"하고있는 일",
+                "WorkBoxes":[{
+                    "Title":"Javascript 공부하기",
+                    "Content":"addEventListener",
+                    "Author":"web"
+                }]
+            },
+            {
+                "Title":"완료한 일",
+                "WorkBoxes":[]
+            }
+        ],
+        "Logs":[
+            {
+                "Content":"<b>해야할 일(을)를 <b>추가</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+            {
+                "Content":"<b>하고 있는 일(을)를 <b>추가</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+            {
+                "Content":"<b>완료한 일(을)를 <b>추가</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+            {
+                "Content":"<b>해야할 일</b>에 <b>블로그에 포스팅할 것</b>(을)를 <b>등록</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+            {
+                "Content":"<b>해야할 일</b>에 <b>GitHub 공부하기</b>(을)를 <b>등록</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+            {
+                "Content":"<b>하고 있는 일</b>에 <b>HTML/CSS 공부하기</b>(을)를 <b>등록</b>하였습니다.",
+                "Time":"Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+            },
+        ]
+    };
+    
+    init.Categories.forEach((category_data) => {
 
-    const todo_2 = new WorkBox(todo)
-    todo_2.title = "블로그에 포스팅할 것"
-    todo_2.content = "*GitHub 공부 내용\n*모던 자바스크립트 1장 공부내용"
-    todo.work_box_list.push(todo_2.createNode());
+        const category_list = document.querySelector('.category_list');
+        const category = new Category(category_data.Title)
+        category_data.WorkBoxes.forEach((work_box_data)=>{
+            const work_box = new WorkBox(category)
+            work_box.title = work_box_data.Title
+            work_box.content = work_box_data.Content
+            work_box.author = work_box_data.Author
+            category.work_box_list.push(work_box.createNode())
+        })
 
-    const doing = new Category("하고 있는 일")
-    const doing_1 = new WorkBox(doing)
-    doing_1.title = "HTML/CSS 공부하기"
-    doing_1.content = "input 태그 실습"
-    doing.work_box_list.push(doing_1.createNode());
-
-    const done = new Category("완료한 일")
-    category_list.append(todo.createNode())
-    category_list.append(doing.createNode())
-    category_list.append(done.createNode())
+        category_list.append(category.createNode())
+        store.category_list.push(category)
+    })
+    init.Logs.forEach((log_data)=>{
+        const log = new Log();
+        log.content = log_data.Content
+        log.setTime(new Date(log_data.Time))
+        log.register();
+        store.log_list.push(log);
+    })
 }

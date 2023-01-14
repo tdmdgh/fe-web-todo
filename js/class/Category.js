@@ -49,7 +49,9 @@ Category.prototype.edit_done_title_event = function () {
             this.title_update()
             this.node.classList.remove("category_name_editing")
 
-            const log = new Log("update_CT", new Date())
+            const log = new Log()
+            log.setAction("update_CT");
+            log.setTime(new Date());
             log.setPrevCT(prev_title);
             log.setCT(this.title);
             log.register();
@@ -90,9 +92,14 @@ Category.prototype.close_btn_event = function () {
     category_addicon.addEventListener('click', () => {
         this.node.remove()
 
-        const log = new Log("remove_CT", new Date())
+        const log = new Log()
+        log.setAction("remove_CT");
+        log.setTime(new Date());
         log.setCT(this.title);
         log.register();
         store.log_list.push(log);
+        store.category_list = store.category_list.filter(
+            (element) => element !== this
+        )
     });
 }

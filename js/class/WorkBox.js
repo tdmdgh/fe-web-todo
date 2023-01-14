@@ -2,13 +2,12 @@ import { newline2br, br2newline } from "../utils.js";
 import Modal from "./Modal.js";
 import Log from "./Log.js";
 import { store } from "../Store.js";
-export default function WorkBox(category, time = "") {
+export default function WorkBox(category) {
     this.title = "";
     this.content = "";
     this.input_value = ""
     this.textarea_value = ""
     this.author = "web"
-    this.time = time;
     this.isRegistable = false;
     this.category = category;
     this.node;
@@ -20,8 +19,8 @@ WorkBox.prototype.createNode = function () {
     this.node.innerHTML =
         `<div class="work_box_row ">
             <div class="work_box_contents ">
-                <input type="text" class="work_box_title_input " value="${this.input_value}" placeholder="제목을 입력하세요">
-                <textarea rows="1" class="work_box_main_input " value="${this.textarea_value}" placeholder="내용을 입력하세요"></textarea>
+                <input type="text" class="work_box_title_input " value="" placeholder="제목을 입력하세요">
+                <textarea rows="1" class="work_box_main_input " value="" placeholder="내용을 입력하세요"></textarea>
                 <div class="work_box_title ">${this.title}</div>
                 <div class="work_box_main ">${this.content}</div>
                 <div class="work_box_author ">author by ${this.author}</div>
@@ -43,7 +42,7 @@ WorkBox.prototype.createNode = function () {
     this.delete_btn_event();
     this.input_check();
 
-    this.dragNdrop();
+    // this.dragNdrop();
     return this.node;
 }
 
@@ -53,16 +52,21 @@ WorkBox.prototype.dragNdrop = function () {
     // })
     let first_mouse_x=0;
     this.node.addEventListener('mousedown', (e) =>{
+        //TODO: adding 일때는 반응  x
         const clientRect = this.node.getBoundingClientRect();
-        console.log("_________________")
+        // console.log("_________________")
         console.log(clientRect.bottom)
-        console.log(clientRect.height)
-        console.log(clientRect.left)
-        console.log(clientRect.right)
-        console.log(clientRect.top)
-        console.log(clientRect.width)
-        console.log(clientRect.x)
-        console.log(clientRect.y)
+        // console.log(clientRect.height)
+        // console.log(clientRect.left)
+        // console.log(clientRect.right)
+        // console.log(clientRect.top)
+        // console.log(clientRect.width)
+        // console.log(clientRect.x)
+        // console.log(clientRect.y)
+
+
+        console.log(indexOfSibling(this.node))
+
         // console.log("down")
         // first_mouse_x = e.offsetX;
         // console.log(first_mouse_x)
@@ -70,21 +74,42 @@ WorkBox.prototype.dragNdrop = function () {
         // this.node.style()="position: absolute;right: 0px;bottom: 0px;)"
     })
     this.node.addEventListener('mousemove', (e) =>{
+
+        const clientRect = this.node.getBoundingClientRect();
+        // console.log(clientRect)
+        // console.log(clientRect.bottom)
+        // console.log(clientRect.height)
+        // console.log(clientRect.left)
+        // console.log(clientRect.right)
+        // console.log(clientRect.top)
+        // console.log(clientRect.width)
+        // console.log(clientRect.x)
+        // console.log(clientRect.y)
+
+
         // console.log(first_mouse_x - e.pageX)
         // console.log(first_mouse_x - e.offsetX)
-
-
+        
         // console.log(e.pageX)
         // console.log(e.clientX)
         // console.log(e.screenX)
         // console.log(e.movementX)
         // console.log("press")
     })
-    // this.node.addEventListener('mouseup', () =>{
-    //     console.log("up")
-    // })
+    this.node.addEventListener('mouseup', (e) =>{
+        console.log(e.target)
+    })
 }
 
+function indexOfSibling(node){
+    let previous_node = node.previousSibling
+    let index = 0;
+    while(previous_node){
+        previous_node = previous_node.previousSibling;
+        index++;
+    }
+    return index;
+}
 
 
 
@@ -99,8 +124,6 @@ WorkBox.prototype.register_add = function () {
         if (!this.isRegistable) return;
         const prev_title = this.title;
         this.title = this.input_value;
-        console.log("this.title")
-        console.log(this.title)
         this.content = newline2br(this.textarea_value);//<br>바꿔주기
 
 
@@ -113,7 +136,10 @@ WorkBox.prototype.register_add = function () {
         if (this.node.classList.contains("editing")) {
             this.node.classList.remove("editing");
 
-            const log = new Log("update_WB", new Date())
+            const log = new Log()
+            log.setAction("update_WB");
+            log.setTime(new Date());
+            log.setCT(this.category.title)
             log.setPrevWT(prev_title);
             log.setWT(this.title);
             log.register();
@@ -124,7 +150,9 @@ WorkBox.prototype.register_add = function () {
         this.category.count_update();
 
 
-        const log = new Log("add", new Date())
+        const log = new Log()
+        log.setAction("add_WB");
+        log.setTime(new Date());
         log.setCT(this.category.title);
         log.setWT(this.title);
         log.register();
