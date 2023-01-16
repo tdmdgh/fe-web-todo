@@ -30,24 +30,28 @@ export function time_diff(date) {
 
     return `${Math.floor(time_diff_day / 365)}년 전`;
 }
-export function sidebar_event() {
-    document.getElementById('menuicon').addEventListener('click', function () {
-        document.getElementById('sidebar').classList.add('active');
-        store.log_list.forEach((e)=>{e.update_time()})
-    });
-    document.getElementById('sidebar_close').addEventListener('click', function () {
-        document.getElementById('sidebar').classList.remove('active');
-        store.category_list.forEach((e)=>{console.log(e)})
-    });
+export function indexOfSibling(node){
+    const listArr = [...node.parentElement.children];
+    return listArr.indexOf(node);
 }
+// export function sidebar_event() {
+//     document.getElementById('menuicon').addEventListener('click', function () {
+//         document.getElementById('sidebar').classList.add('active');
+//         store.log_list.forEach((e)=>{e.update_time()})
+//     });
+//     document.getElementById('sidebar_close').addEventListener('click', function () {
+//         document.getElementById('sidebar').classList.remove('active');
+//         store.category_list.forEach((e)=>{console.log(e)})
+//     });
+// }
 
-export function fab_event() {
-    const floating_btn = document.querySelector('.floating_btn');
-    floating_btn.addEventListener('click', () => {
-        const modal = new Modal("add",)
-        modal.show()
-    })
-}
+// export function fab_event() {
+//     const floating_btn = document.querySelector('.floating_btn');
+//     floating_btn.addEventListener('click', () => {
+//         const modal = new Modal("add",)
+//         modal.show()
+//     })
+// }
 export function initialize_values() {
     let init={
         "Categories":[
@@ -114,7 +118,8 @@ export function initialize_values() {
             work_box.title = work_box_data.Title
             work_box.content = work_box_data.Content
             work_box.author = work_box_data.Author
-            category.work_box_list.push(work_box.createNode())
+            work_box.createNode()
+            category.work_box_list.push(work_box)
         })
 
         category_list.append(category.createNode())

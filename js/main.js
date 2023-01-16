@@ -1,11 +1,17 @@
-import { sidebar_event, fab_event, initialize_values } from "./utils.js";
-// import { time_diff } from "./utils.js";
+import {  initialize_values } from "./utils.js";
+import addEvents from "./events.js";
 
-sidebar_event();
-fab_event();
+// sidebar_event();
+// fab_event();
 initialize_values();
 
+addEvents();
 
+// document.addEventListener('click', (e) => {
+//     // console.log(e.target.querySelector("menuicon"))
+//     // if(e.target.closest("#menuicon")) console.log("lskdjflk")
+//     console.log(e.target.classList)
+// })
 // const now = new Date();
 
 // setTimeout(() => {

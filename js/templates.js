@@ -14,7 +14,7 @@ export function category_template(category, init_work_boxes) {
 }
 export function category_header(category) {
     return `<div class="category_header">
-    <div class="category_name">
+    <div class="category_title">
         <span>${category.title}</span>
         <div class="category_count">${category.work_box_list.length}</div>
     </div>

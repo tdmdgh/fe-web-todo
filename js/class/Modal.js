@@ -53,7 +53,7 @@ Modal.prototype.cancel_btn_event = function () {
 Modal.prototype.delete_btn_event = function () {
     this.node.querySelector(".modal_delete_btn").addEventListener('click', () => {
         this.category.work_box_list = this.category.work_box_list.filter(
-            (element) => element !== this.deleting_node
+            (element) => element.node !== this.deleting_node
         )
 
         this.deleting_node.remove();
@@ -67,6 +67,8 @@ Modal.prototype.delete_btn_event = function () {
         log.setWT(this.wb_title);
         log.register();
         store.log_list.push(log);
+
+
     })
 }
 Modal.prototype.register_btn_event = function () {
