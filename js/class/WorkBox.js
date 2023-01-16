@@ -61,78 +61,38 @@ WorkBox.prototype.drag_start = function (e) {
     vacant_node.classList.add("vacant")
     this.node.classList.add("drag")
     this.node.after(vacant_node)
-
-    // this.node.style.zIndex = 1;
-    // this.is_drag_start = true;
-    // this.node.classList.add("drag_done")
-    // console.log("_________________")
-    // console.log(clientRect)
-    // console.log("워크박스안에서 x위치" + (e.clientX - clientRect.x))
-    // console.log("마우스의 x위치: " + e.clientX)
-    // console.log("워크박스의 x좌표: " + clientRect.x)
-    // console.log("워크박스의 가로 넓이: " + clientRect.width)
-
-    // let elementTop2 = window.pageYOffset + clientRect.top;
-    // console.log(this.node.style.marginTop)
-    // console.log("워크박스안에서 y위치" + (e.clientY - clientRect.y))
-    // console.log("마우스의 y위치: " + e.clientY)
-    // console.log("워크박스의 y좌표: " + clientRect.y)
-    // console.log("워크박스의 세로 넓이: " + clientRect.height)
-    // console.log("워크박스의 top: " + clientRect.top)
-    // console.log("워크박스의 절대 좌표: " + elementTop2)
-    // console.log(  e.offsetX)
 }
 WorkBox.prototype.drag_move = function (e) {
     if (!this.node.classList.contains("drag")) return
     const clientRect = this.node.getBoundingClientRect();
-    // console.log("_________________")
-    // console.log(e.clientX)
-    // this.node.style.position = "absolute"
     this.node.style.left = `${this.position_x + e.pageX - this.drag_start_x}px`
     this.node.style.top = `${this.position_y + e.pageY - this.drag_start_y}px`
 }
 WorkBox.prototype.drag_mouseleave = function (e) {
-    // if(!this.node.classList.contains("drag")) return
     if (!this.node.classList.contains("drag")) return
     this.node.classList.remove("drag")
     document.querySelector(".vacant").remove();
-
-    // const clientRect = this.node.getBoundingClientRect();
-    // console.log("_________________")
-    // console.log(e.clientX)
-    // this.node.style.position = "absolute"
     this.node.style.left = `${this.position_x}px`
     this.node.style.top = `${this.position_y}px`
 }
 WorkBox.prototype.drag_end = function (e) {
-    // this.is_drag_start = false
-    // this.node.style.pointerEvents = "none"
-    // this.node.classList.add("drag_done")
     this.node.style.left = ""//`${this.position_x}px`
     this.node.style.top = ""//`${this.position_y}px`
     this.node.classList.remove("drag")
     document.querySelector(".vacant").remove();
 
-    // this.node.style.zIndex = 'auto'
     const new_category_index = get_drop_category_index(e);
-    // console.log(new_category_index)
     if(new_category_index==-1) return
-    // console.log(new_category)/
     const new_category = store.category_list[new_category_index]
-    // console.log(new_category.node.lastChild.childNodes)
-    // return
-    // console.log(new_category)
     const insert_before_workbox_index = get_drop_before_workbox_index(new_category, e)
     console.log(insert_before_workbox_index)
-    if(new_category==this.category && insert_before_workbox_index== indexOfSibling(this.node)) {
+    const current_index = indexOfSibling(this.node);
+    if(new_category==this.category && (insert_before_workbox_index== current_index||insert_before_workbox_index-1== current_index)) {
         console.log("같은 위치+")
-        console.log(insert_before_workbox_index)
         return
     }
-    // console.log(insert_before_workbox_index)
     const no = new_category.node.querySelectorAll(".work_box")
 
-    // console.log(no[insert_before_workbox_index])
 
     new_category.node.querySelector(".work_box_list").insertBefore(this.node, no[insert_before_workbox_index])
     for (let i = 0; i < this.category.work_box_list.length; i++) { //기존 데이터 삭제
@@ -149,57 +109,9 @@ WorkBox.prototype.drag_end = function (e) {
     console.log(this.category)
     new_category.work_box_list.splice(insert_before_workbox_index, 0, this) //데이터에 저장: 새로운 카테고리에 삽입
     store.category_list.splice(new_category_index,1,new_category)
-    // console.log(new_category)
-    // console.log(store.category_list)
     
     new_category.count_update()
-    
-    // const clientRect= this.node.getBoundingClientRect();
-    // this.node.style.left = ""//`${window.pageYOffset + clientRect.left}px`
-    // this.node.style.top = ""//`${window.pageYOffset + clientRect.top - 8}px`
-
     return
-    // console.log(insert_before_workbox_index)
-    new_category.node.lastChild.insertBefore(this.node,insert_before_workbox_index)
-    return
-    if (insert_before_workbox_index) {
-        new_category.node.insertBefore(this.node, insert_before_workbox_index.node)
-        new_category.work_box_list.splice(insert_before_workbox_index, 0, this)
-    }
-    else {
-        new_category.node.insertBefore(this.node, null)
-        new_category.work_box_list.push(this)
-    }
-    // const  insert_before_workbox = new_category.work_box_list[insert_workbox_index].node;
-    // insert_before_workbox.parentNode.insertBefore(this.node,insert_before_workbox)
-    // const insert_before_workbox= new_category.querySelector(".work_box_list").nth
-    // const index_node =new_category.work_box_list[insert_before_workbox_index]?new_category.work_box_list[insert_before_workbox_index].node:null;
-    // const index_node =new_category.work_box_list[insert_before_workbox_index].node
-    // console.log(index_node)
-    // new_category.node.insertBefore(this.node, index_node)
-
-    // new_category.work_box_list.splice(insert_before_workbox_index, 0, this) //데이터에 저장: 새로운 카테고리에 삽입
-    for (let i = 0; i < this.category.work_box_list.length; i++) { //기존 데이터 삭제
-        if (this.category.work_box_list[i] === this) {
-            this.category.work_box_list.splice(i, 1);
-            i--;
-        }
-    }
-    this.category.count_update();
-    new_category.count_update()
-    // store.category_list.forEach((category)=>{
-    //     const clientRect_category = category.node.getBoundingClientRect();
-    //     // console.log((clientRect_category.x+clientRect_category.width)/2)
-    //     if(clientRect_category.x < e.pageX && e.pageX<clientRect_category.x +clientRect_category.width){
-
-    //     console.log(clientRect_category)
-    //     }
-    // })
-    // if(!this.is_drag_start) return
-    // const clientRect = this.node.getBoundingClientRect();
-    console.log("_________________")
-    // console.log(e.clientX)
-    // this.node.style
 }
 function get_drop_category_index(e) {
     let return_category
@@ -216,77 +128,20 @@ function get_drop_category_index(e) {
             index = i;
         }
     }
-    // store.category_list.forEach((category) => {
-    //     const clientRect_category = category.node.getBoundingClientRect();
-    //     if (clientRect_category.x < e.pageX && e.pageX < clientRect_category.x + clientRect_category.width) {
-    //         return_category = category
-    //     }
-    // })
-
     return index//store.category_list[index]
 }
 function get_drop_before_workbox_index(category, e) {
-    // const work_box_nodes = category.node.querySelectorAll(".work_box")
-    // console.log(work_box_nodes)
-    // // console.log(work_box_node_list.childNodes[0])
-    // let workbox_node;
-
-    // // console.log(category.node.lastChild.childNodes.length)
-    // // let index = category.node.lastChild.childNodes.length;
-    // for (let i =0; i< work_box_nodes; i++) {
-    //     console.log(i)
-    //     const clientRect_workbox = work_box_nodes[i].getBoundingClientRect();
-    //     console.log(clientRect_workbox)
-    //     if (e.pageY < (clientRect_workbox.y + clientRect_workbox.height / 2)) {
-    //         workbox_node = work_box_nodes[i]
-    //         break
-    //     }
-    // }
-    // console.log(workbox_node)
-    // return workbox_node
-
-
     let index = category.work_box_list.length;
     for (let i in category.work_box_list) {
         const clientRect_workbox = category.work_box_list[i].node.getBoundingClientRect();
-        // console.log(clientRect_workbox)
-        // console.log(e.pageY)
-        // console.log((clientRect_workbox.y + clientRect_workbox.height/2))
         if (e.pageY < (clientRect_workbox.y + clientRect_workbox.height / 2)) {
             index = i
             break
         }
     }
-    // return category.work_box_list[index]
     return index
-    if (category.work_box_list[index])
-        return category.work_box_list[i].node
-    return null
-    // console.log(index)
-    // console.log(index)
-    // category.work_box_list.forEach((workbox)=>{
-    //     const clientRect_workbox = workbox.node.getBoundingClientRect();
-    //     if(clientRect_category.x < e.pageX && e.pageX<clientRect_category.x +clientRect_category.width){
-    //         // console.log(clientRect_category)
-    //         // console.log(category)
-    //         return_category = category
-    //     }
-    // })
 }
 
-// function indexOfSibling(node) {
-//     let previous_node = node.previousSibling
-//     let index = 0;
-//     while (previous_node) {
-//         previous_node = previous_node.previousSibling;
-//         index++;
-//     }
-//     return index;
-// }
-// function indexOfSibling(node){
-//     const listArr = [...node.parentElement.children];
-//     return listArr.indexOf(node);
-// }
 
 
 

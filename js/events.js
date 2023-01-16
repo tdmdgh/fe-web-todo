@@ -89,10 +89,6 @@ export default function addEvents() {
         
         const work_box = e.target.closest(".work_box")
         if (work_box) {
-            
-    // const clientRect =work_box.getBoundingClientRect();
-    // console.log(clientRect)
-    // return
             work_box.style.left =""
             work_box.style.top=""
 
@@ -100,13 +96,7 @@ export default function addEvents() {
             const category = store.category_list[indexOfSibling(category_column)]
             const work_box_obj = category.work_box_list[indexOfSibling(work_box)]
             work_box_obj.drag_start(e);
-
-            // const vacant_node = work_box.cloneNode(true)
-            // vacant_node.classList.add("vacant")
-            // work_box.after(vacant_node)
-            
         }
-        // console.log(store.category_list)
     });
     document.addEventListener('mousemove', (e) => {
         if (document.querySelector(".adding")) return
@@ -122,7 +112,6 @@ export default function addEvents() {
     });
     document.addEventListener('mouseleave', (e) => {
         const work_box = document.querySelector(".drag")
-        // const work_box = e.target.closest(".work_box")
         if (work_box) {
             const category_column = work_box.closest(".category_column")
             const category = store.category_list[indexOfSibling(category_column)]
@@ -139,7 +128,6 @@ export default function addEvents() {
             const work_box_obj = category.work_box_list[indexOfSibling(work_box)]
             work_box_obj.drag_end(e);
         }       
-        // console.log(store.category_list)
 
     });
 }
@@ -156,17 +144,3 @@ function fab_event() {
     const modal = new Modal("add",)
     modal.show()
 }
-
-// function indexOfSibling(node) {
-//     let previous_node = node.previousSibling
-//     let index = 0;
-//     while (previous_node) {
-//         previous_node = previous_node.previousSibling;
-//         index++;
-//     }
-//     return index;
-// }
-// function indexOfSibling(node){
-//     const listArr = [...node.parentElement.children];
-//     return listArr.indexOf(node);
-// }
