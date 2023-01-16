@@ -68,6 +68,20 @@ WorkBox.prototype.drag_move = function (e) {
     this.node.style.left = `${this.position_x + e.pageX - this.drag_start_x}px`
     this.node.style.top = `${this.position_y + e.pageY - this.drag_start_y}px`
 }
+WorkBox.prototype.create_illusion_box = function (e) {
+    if (!this.node.classList.contains("drag")) return
+    const new_category_index = get_drop_category_index(e);
+    if(new_category_index==-1) return
+    const new_category = store.category_list[new_category_index]
+    const insert_before_workbox_index = get_drop_before_workbox_index(new_category, e)
+    console.log("카테고리 인덱스: " +new_category_index)
+    console.log("box인덱스: " +insert_before_workbox_index)
+    const current_index = indexOfSibling(this.node);
+    if(new_category==this.category && (insert_before_workbox_index== current_index||insert_before_workbox_index-1== current_index)) {
+        console.log("같은 위치+")
+        return
+    }
+}
 WorkBox.prototype.drag_mouseleave = function (e) {
     if (!this.node.classList.contains("drag")) return
     this.node.classList.remove("drag")

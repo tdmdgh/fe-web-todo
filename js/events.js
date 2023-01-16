@@ -107,6 +107,7 @@ export default function addEvents() {
         }
     });
     document.addEventListener('mousemove', (e) => {
+        if (!document.querySelector(".drag")) return
         if (document.querySelector(".adding")) return
         if (e.target.classList.contains("box_delete_icon")) return
         if (e.target.classList.contains("box_edit_icon")) return
@@ -116,6 +117,7 @@ export default function addEvents() {
             const category = store.category_list[indexOfSibling(category_column)]
             const work_box_obj = category.work_box_list[indexOfSibling(work_box)]
             work_box_obj.drag_move(e);
+            work_box_obj.create_illusion_box(e);
         }
     });
     document.addEventListener('mouseleave', (e) => {
