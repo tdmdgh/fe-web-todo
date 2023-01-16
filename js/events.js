@@ -75,13 +75,21 @@ export default function addEvents() {
                 const category_column = e.target.closest(".category_column")
                 const category = store.category_list[indexOfSibling(category_column)]
                 category.title_update(category_title_input.value)
-                e.target.closest(".category_title")
             }
         }
     });
 
 
     document.addEventListener('mousedown', (e) => {
+        const category_title_input = e.target.closest(".category_title_input")
+        if(!category_title_input){
+            if(document.querySelector(".category_title_editing")){
+                const category_column = document.querySelector(".category_title_editing")
+                const category = store.category_list[indexOfSibling(category_column)]
+                category.title_update(category_column.querySelector(".category_title_input").value)
+            }
+        }
+
         if (document.querySelector(".adding")) return
         if (e.target.classList.contains("box_delete_icon")) return
         if (e.target.classList.contains("box_edit_icon")) return
