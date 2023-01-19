@@ -3,7 +3,7 @@ import Log from "../model/Log.js";
 import WorkBox from "../model/WorkBox.js"
 import { store } from "./store.js"
 import { binarysearch_category, get_element_index } from "../utils.js";
-import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server,patch_category_title_server} from "./Fetches.js"
+import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server,patch_category_title_server, delete_category_server} from "./Fetches.js"
 
 //init이 서버에서 받아온 json 이라고 가정
 //init을 전체 프로젝트에서 사용할 store 변수에 변경, 저장 후, 프로젝트에서는 store를 사용
@@ -30,12 +30,17 @@ export function initial_render() {
     })
     return store
 }
-export function remove_category(id) {
+export function remove_category(id,title) {
+    const log = new Log()
+    log.remove_category(title);
+    add_log(log)
+    
     const idx = binarysearch_category(id,store.category_list)
     //category가 갖고 있던 workbox 전부 삭제
     const category = store.category_list[idx]
-    category.work_box_id_list.forEach((idx) => { store.workbox_map.delete(idx) })
+    category.work_box_id_list.forEach((id) => { store.workbox_map.delete(id); delete_workbox_server(id) })
     store.category_list.splice(idx,1)
+    delete_category_server(id)
 }
 export function remove_workbox(workbox_id,category_id) {
 

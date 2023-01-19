@@ -303,6 +303,7 @@ input {
     display: flex;
     line-height: 20px;
     font-size: 14px;
+    min-height: 20px;
 }
 
 .work_box_main_input {

@@ -79,11 +79,11 @@ Category.prototype.add_btn_event = function () {
 Category.prototype.close_btn_event = function () {
     this.node.remove()
 
-    const log = new Log()
-    log.remove_category(this.title);
-    add_log(log)
+    // const log = new Log()
+    // log.remove_category(this.title);
+    // add_log(log)
 
-    remove_category(this.id);
+    remove_category(this.id,this.title);
     
 }
 Category.prototype.render_header = function () {
