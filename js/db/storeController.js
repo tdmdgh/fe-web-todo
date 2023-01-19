@@ -3,7 +3,7 @@ import Log from "../model/Log.js";
 import WorkBox from "../model/WorkBox.js"
 import { store } from "./store.js"
 import { binarysearch_category, get_element_index } from "../utils.js";
-import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server} from "./Fetches.js"
+import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server,patch_category_title_server} from "./Fetches.js"
 
 //init이 서버에서 받아온 json 이라고 가정
 //init을 전체 프로젝트에서 사용할 store 변수에 변경, 저장 후, 프로젝트에서는 store를 사용
@@ -60,7 +60,7 @@ export function remove_workbox(workbox_id,category_id) {
     //서버 데이터관리
     delete_workbox_server(workbox_id)
     patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
-    post_Log({log_content: log.content, log_time:log.time})
+    // post_Log({log_content: log.content, log_time:log.time})
 }
 export function add_category(category_title) {
     const category = new Category(generate_category_id(), category_title,[]);
@@ -84,8 +84,8 @@ export function add_workbox(workbox,category_id) {
     //서버 데이터 관리
     post_workbox_server(workbox)
     patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
-    debugger
-    post_Log({log_content: log.content, log_time:log.time})
+    // debugger
+    // post_Log({log_content: log.content, log_time:log.time})
 
 }
 export function move_workbox(work_box_id, prev_category_id, category_id) {
@@ -122,9 +122,18 @@ export function update_workbox(category_title,prev_workbox_title,id,workbox_titl
     const log = new Log()
     log.update_workbox(category_title,prev_workbox_title,workbox_title);
     add_log(log);
-    debugger
+    // debugger
     patch_workbox_server({workbox_id:id,title:workbox_title,content:content})
-    post_Log({log_content: log.content, log_time:log.time})
+    // post_Log({log_content: log.content, log_time:log.time})
+}
+export function update_category(category_id) {
+    const category = get_category(category_id)
+    category.title_update(category.node.querySelector(".category_title_input").value)
+    
+    
+    patch_category_title_server({category_id: category.id, title:category.title})
+    // patch_workbox_server({workbox_id:id,title:workbox_title,content:content})
+    // post_Log({log_content: log.content, log_time:log.time})
 }
 export function get_category(id) {
     const idx = binarysearch_category(id,store.category_list)
@@ -138,6 +147,7 @@ export function get_workbox(id) {
 export function add_log(log) {
     log.register();//렌더링
     store.log_list.push(log);
+    post_Log({log_content: log.content, log_time:log.time})
 }
 export function update_logs_time() {
     // console.log(store.category_list)

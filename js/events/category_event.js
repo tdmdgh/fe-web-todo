@@ -1,4 +1,4 @@
-import { get_category } from "../db/storeController.js";
+import { get_category,update_category } from "../db/storeController.js";
 
 export default function category_events() {
     document.addEventListener('click', (e) => {
@@ -7,8 +7,10 @@ export default function category_events() {
         if (!category_title_input) {
             if (document.querySelector(".category_title_editing")) {
                 const category_column = document.querySelector(".category_title_editing")
-                const category = get_category(category_column.id)
-                category.title_update(category_column.querySelector(".category_title_input").value)
+                update_category(category_column.id)
+                
+                // const category = get_category(category_column.id)
+                // category.title_update(category_column.querySelector(".category_title_input").value)
             }
         }
 

@@ -76,6 +76,17 @@ function patch_category_server({category_id,work_box_id_list}) {
         },
     })
 }
+function patch_category_title_server({category_id,title}) {
+    fetch("http://localhost:3000/Categories/"+category_id, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            title: title,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+}
 function post_Log({log_content,log_time}){
     fetch("http://localhost:3000/Logs", {
         method: "POST",
@@ -103,5 +114,5 @@ function patch_workbox_server({workbox_id,title,content}) {
     }).then((resp)=>resp.json()).catch((err)=>console.error(err))
 }
 export {
-    get_JSONData, post_workbox_server,patch_category_server,post_Log,delete_workbox_server,patch_workbox_server
+    get_JSONData, post_workbox_server,patch_category_server,post_Log,delete_workbox_server,patch_workbox_server,patch_category_title_server
 }
