@@ -86,9 +86,22 @@ function post_Log({log_content,log_time}){
             Content: log_content,
             Time: log_time,
         }),
-    }).then((resp)=>resp.json()).catch((err)=>console.error(err))
+    })
     // debugger
 }
+function patch_workbox_server({workbox_id,title,content}) {
+    debugger
+    fetch("http://localhost:3000/WorkBoxes/"+workbox_id, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            title: title,
+            content: content
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    }).then((resp)=>resp.json()).catch((err)=>console.error(err))
+}
 export {
-    get_JSONData, post_workbox_server,patch_category_server,post_Log,delete_workbox_server
+    get_JSONData, post_workbox_server,patch_category_server,post_Log,delete_workbox_server,patch_workbox_server
 }

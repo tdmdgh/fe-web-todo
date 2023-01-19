@@ -51,7 +51,8 @@ WorkBox.prototype.register_btn_event = function () {
 
     if (this.node.classList.contains("editing")) {
         this.node.classList.remove("editing");
-        update_workbox(category.title,prev_title,this.title) //log 생성 
+        update_workbox(category.title,prev_title,this.id,this.title,this.content) //log 생성 
+        debugger
         return
     }
     category.update_count();

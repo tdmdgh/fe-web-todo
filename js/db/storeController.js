@@ -3,7 +3,7 @@ import Log from "../model/Log.js";
 import WorkBox from "../model/WorkBox.js"
 import { store } from "./store.js"
 import { binarysearch_category, get_element_index } from "../utils.js";
-import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server} from "./Fetches.js"
+import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server} from "./Fetches.js"
 
 //init이 서버에서 받아온 json 이라고 가정
 //init을 전체 프로젝트에서 사용할 store 변수에 변경, 저장 후, 프로젝트에서는 store를 사용
@@ -118,10 +118,13 @@ export function move_workbox(work_box_id, prev_category_id, category_id) {
 
         // console.log(store)
 }
-export function update_workbox(category_title,prev_workbox_title,workbox_title) {
+export function update_workbox(category_title,prev_workbox_title,id,workbox_title,content) {
     const log = new Log()
     log.update_workbox(category_title,prev_workbox_title,workbox_title);
     add_log(log);
+    debugger
+    patch_workbox_server({workbox_id:id,title:workbox_title,content:content})
+    post_Log({log_content: log.content, log_time:log.time})
 }
 export function get_category(id) {
     const idx = binarysearch_category(id,store.category_list)
