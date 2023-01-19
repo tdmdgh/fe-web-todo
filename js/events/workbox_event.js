@@ -110,7 +110,8 @@ export default function workbox_events() {
                 const category = get_category(category_id)
                 const clientRect_category = category.node.getBoundingClientRect();
                 if(e.pageY<clientRect_category.bottom){
-                    category.node.querySelector(".work_box_list").insertAdjacentElement("afterbegin",transparent_workbox);
+                    if(!below_under_mouse.closest(".category_column"))
+                        category.node.querySelector(".work_box_list").insertAdjacentElement("afterbegin",transparent_workbox);
                 }
                 else{
                     category.node.querySelector(".work_box_list").insertAdjacentElement("beforeend",transparent_workbox);
@@ -164,7 +165,7 @@ function get_category_id_by_mouse(clientX) {
         const clientRect_category = category_list[i].getBoundingClientRect();
         if (clientRect_category.x < clientX && clientX < clientRect_category.x + clientRect_category.width) {
             category_id = category_list[i].id;
-            console.log(clientRect_category)
+            // console.log(clientRect_category)
         }
     }
     
