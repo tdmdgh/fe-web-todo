@@ -17,7 +17,7 @@ export default function static_events() {
 }
 function sidebar_active_event() {
     document.getElementById('sidebar').classList.add('active');
-    // update_logs_time();
+    update_logs_time();
     // const ele0 = document.getElementById('0');
     // const ele2 = document.getElementById('2');
 

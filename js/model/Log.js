@@ -1,5 +1,5 @@
 import { time_diff } from "../utils.js";
-export default function Log(time=new Date(), content="") {
+export default function Log(time=new Date().getTime(), content="") {
     this.time = time;
     this.content = content;
 
@@ -18,6 +18,7 @@ Log.prototype.createNode = function () {
 }
 Log.prototype.update_time = function (){
     this.node.querySelector(".log_time").innerHTML = time_diff(this.time);
+    // debugger
 }
 Log.prototype.render = function () {
     this.node.innerHTML =

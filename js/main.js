@@ -1,12 +1,16 @@
 import {initialize_store, initial_render} from "./db/storeController.js"
 import add_events from "./events/add_events.js";
+import { get_JSONData } from "./db/Fetches.js";
 
 
-import { generate_workbox_id } from "./db/storeController.js";
-
-
-initialize_store();
-initial_render();
-add_events()
-
-// console.log(generate_workbox_id())
+// ( async () => {
+//     await get_JSONData();
+//     initialize_store();
+//     initial_render();
+//     add_events()
+// })();
+get_JSONData().then(()=>{
+    initialize_store(); 
+    initial_render();
+    add_events();
+})

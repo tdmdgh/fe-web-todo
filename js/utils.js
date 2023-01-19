@@ -7,7 +7,7 @@ export function br2newline(str) {
 }
 export function time_diff(date) {
     const now = new Date();
-    const time_diff = Math.floor((now.getTime() - date.getTime()) / 1000 / 60);
+    const time_diff = Math.floor((now.getTime() - date) / 1000 / 60);
     if (time_diff < 1) return '방금 전';
     if (time_diff < 60) {
         return `${time_diff}분 전`;

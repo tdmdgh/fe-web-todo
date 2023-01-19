@@ -3,6 +3,7 @@ import Log from "../model/Log.js";
 import WorkBox from "../model/WorkBox.js"
 import { store } from "./store.js"
 import { binarysearch_category, get_element_index } from "../utils.js";
+import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server} from "./Fetches.js"
 
 //init이 서버에서 받아온 json 이라고 가정
 //init을 전체 프로젝트에서 사용할 store 변수에 변경, 저장 후, 프로젝트에서는 store를 사용
@@ -10,7 +11,10 @@ export function initialize_store() {
     set_workbox_map();
     set_category_list();
     set_log_list();
+    // debugger
 }
+
+
 export function initial_render() {
     //body
     store.category_list.forEach((category) => {
@@ -24,6 +28,7 @@ export function initial_render() {
         // log_list.prepend(log.node)
         log.register();
     })
+    return store
 }
 export function remove_category(id) {
     const idx = binarysearch_category(id,store.category_list)
@@ -48,6 +53,14 @@ export function remove_workbox(workbox_id,category_id) {
     store.workbox_map.delete(workbox_id) 
     category.update_count()
     
+    const log = new Log();
+    log.remove_workbox(category.title,work_box.title)
+    add_log(log)
+
+    //서버 데이터관리
+    delete_workbox_server(workbox_id)
+    patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
+    post_Log({log_content: log.content, log_time:log.time})
 }
 export function add_category(category_title) {
     const category = new Category(generate_category_id(), category_title,[]);
@@ -67,7 +80,13 @@ export function add_workbox(workbox,category_id) {
     
     category.update_count()
     clear_adding_workbox()
-    console.log(store)
+
+    //서버 데이터 관리
+    post_workbox_server(workbox)
+    patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
+    debugger
+    post_Log({log_content: log.content, log_time:log.time})
+
 }
 export function move_workbox(work_box_id, prev_category_id, category_id) {
         //store데이터의 선택된 workbox의 category_id 바꾸기
@@ -118,15 +137,17 @@ export function add_log(log) {
     store.log_list.push(log);
 }
 export function update_logs_time() {
-    console.log(store.category_list)
-    console.log(store.workbox_map)
-    console.log(store.adding_workbox)
-    console.log(store.log_list)
+    // console.log(store.category_list)
+    // console.log(store.workbox_map)
+    // console.log(store.adding_workbox)
+    // console.log(store.log_list)
     store.log_list.forEach((log) => { log.update_time() })
 }
 
 
 function generate_category_id() {
+    console.log(init)
+    if(store.category_list.length == 0) return 0;
     return store.category_list[store.category_list.length - 1].id + 1
 }
 
@@ -200,85 +221,89 @@ function set_category_list() {
 // }
 function set_log_list() {
     for (const log_data of init.Logs) {
-        const log = new Log(new Date(log_data.Time), log_data.Content)
+        const log = new Log(log_data.Time, log_data.Content)
         // log.createNode();
         store.log_list.push(log);
     }
 
 }
+export const init = {
+    Categories: [],
+    WorkBoxes: [],
+    Logs: [],
+}
 
-
-let init = {
-    "Categories": [
-        {
-            "title": "해야할 일",
-            "id": 0,
-            // "first_workbox_id": 0,
-            "workbox_id_list":[0,1]
-        },
-        {
-            "title": "하고있는 일",
-            "id": 1,
-            // "first_workbox_id": 2,
-            "workbox_id_list":[2]
-        },
-        {
-            "title": "완료한 일",
-            "id": 2,
-            // "first_workbox_id": -1,
-            "workbox_id_list":[]
-        }
-    ],
-    "WorkBoxes": [
-        {
-            "id": 0,
-            "category_id": 0,
-            // "next_id": 1,
-            "title": "블로그에 포스팅할 것",
-            "content": "GitHub 공부내용<br>모던 자바스크립트 공부내용",
-            "author": "web"
-        },
-        {
-            "id": 1,
-            "category_id": 0,
-            // "next_id": -1,
-            "title": "GitHub 공부하기",
-            "content": "add, commit, push",
-            "author": "web"
-        },
-        {
-            "id": 2,
-            "category_id": 1,
-            // "next_id": -1,
-            "title": "HTML/CSS 공부하기",
-            "content": "1장 예제 내용 실습",
-            "author": "web"
-        },
-    ],
-    "Logs": [//나중에 받을 때, 시간 오름차순
-        {
-            "Content": "<b>해야할 일(을)를 <b>추가</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-        {
-            "Content": "<b>하고 있는 일(을)를 <b>추가</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-        {
-            "Content": "<b>완료한 일(을)를 <b>추가</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-        {
-            "Content": "<b>해야할 일</b>에 <b>블로그에 포스팅할 것</b>(을)를 <b>등록</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-        {
-            "Content": "<b>해야할 일</b>에 <b>GitHub 공부하기</b>(을)를 <b>등록</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-        {
-            "Content": "<b>하고 있는 일</b>에 <b>HTML/CSS 공부하기</b>(을)를 <b>등록</b>하였습니다.",
-            "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
-        },
-    ]
-};
+// let init2 = {
+//     "Categories": [
+//         {
+//             "title": "해야할 일",
+//             "id": 0,
+//             // "first_workbox_id": 0,
+//             "workbox_id_list":[0,1]
+//         },
+//         {
+//             "title": "하고있는 일",
+//             "id": 1,
+//             // "first_workbox_id": 2,
+//             "workbox_id_list":[2]
+//         },
+//         {
+//             "title": "완료한 일",
+//             "id": 2,
+//             // "first_workbox_id": -1,
+//             "workbox_id_list":[]
+//         }
+//     ],
+//     "WorkBoxes": [
+//         {
+//             "id": 0,
+//             "category_id": 0,
+//             // "next_id": 1,
+//             "title": "블로그에 포스팅할 것",
+//             "content": "GitHub 공부내용<br>모던 자바스크립트 공부내용",
+//             "author": "web"
+//         },
+//         {
+//             "id": 1,
+//             "category_id": 0,
+//             // "next_id": -1,
+//             "title": "GitHub 공부하기",
+//             "content": "add, commit, push",
+//             "author": "web"
+//         },
+//         {
+//             "id": 2,
+//             "category_id": 1,
+//             // "next_id": -1,
+//             "title": "HTML/CSS 공부하기",
+//             "content": "1장 예제 내용 실습",
+//             "author": "web"
+//         },
+//     ],
+//     "Logs": [//나중에 받을 때, 시간 오름차순
+//         {
+//             "Content": "<b>해야할 일(을)를 <b>추가</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//         {
+//             "Content": "<b>하고 있는 일(을)를 <b>추가</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//         {
+//             "Content": "<b>완료한 일(을)를 <b>추가</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//         {
+//             "Content": "<b>해야할 일</b>에 <b>블로그에 포스팅할 것</b>(을)를 <b>등록</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//         {
+//             "Content": "<b>해야할 일</b>에 <b>GitHub 공부하기</b>(을)를 <b>등록</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//         {
+//             "Content": "<b>하고 있는 일</b>에 <b>HTML/CSS 공부하기</b>(을)를 <b>등록</b>하였습니다.",
+//             "Time": "Sat Jan 14 2023 21:01:25 GMT+0900 (한국 표준시)",
+//         },
+//     ]
+// };
