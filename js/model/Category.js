@@ -4,7 +4,7 @@ import WorkBox from "./WorkBox.js";
 export default function Category(id,title,workbox_list=[]) {
     this.title = title;
     this.id = id;
-    this.work_box_id_list = workbox_list;
+    this.workbox_id_list = workbox_list;
     this.node;
 }
 Category.prototype.setTitle = function(title) {
@@ -21,19 +21,19 @@ Category.prototype.createNode = function() {
     this.node.classList.add("category_column");
     this.node.id = this.id;
     this.render_header();
-    const work_box_list_node = this.create_work_box_list_node();
-    this.node.append(work_box_list_node);
+    const workbox_list_node = this.create_workbox_list_node();
+    this.node.append(workbox_list_node);
     return this.node;
 
 }
-Category.prototype.create_work_box_list_node = function () {
-    const work_box_list_node = document.createElement('ul');
-    work_box_list_node.classList.add("work_box_list");
-    for(let workbox_id of this.work_box_id_list){
+Category.prototype.create_workbox_list_node = function () {
+    const workbox_list_node = document.createElement('ul');
+    workbox_list_node.classList.add("workbox_list");
+    for(let workbox_id of this.workbox_id_list){
         if(workbox_id==-1 || workbox_id ==undefined)break;
-        work_box_list_node.append(get_workbox(workbox_id).node);
+        workbox_list_node.append(get_workbox(workbox_id).node);
     }
-    return work_box_list_node;
+    return workbox_list_node;
 }
 
 Category.prototype.title_edit = function () {
@@ -52,7 +52,7 @@ Category.prototype.title_update = function (value) {
     add_log(log)
 }
 Category.prototype.update_count = function () {
-    this.node.querySelector(".category_count").innerHTML = this.work_box_id_list.length
+    this.node.querySelector(".category_count").innerHTML = this.workbox_id_list.length
 }
 Category.prototype.add_btn_event = function () {
     const is_adding = document.querySelector(".adding")
@@ -60,20 +60,20 @@ Category.prototype.add_btn_event = function () {
     if (is_editing) return
     if (is_adding) {
         if(is_adding.closest(".category_column").dataset.id == this.id) return
-        const adding_work_box = this.node.querySelector(".adding")
-        if(adding_work_box) adding_work_box.remove();
-        // this.work_box_list.shift()
+        const adding_workbox = this.node.querySelector(".adding")
+        if(adding_workbox) adding_workbox.remove();
+        // this.workbox_list.shift()
         return
     }
-    const work_box = new WorkBox(generate_workbox_id(),this.id,);
-    work_box.createNode();
-    work_box.node.classList.add("adding")
-    // work_box.node.dataset.id=generate_workbox_id()
+    const workbox = new WorkBox(generate_workbox_id(),this.id,);
+    workbox.createNode();
+    workbox.node.classList.add("adding")
+    // workbox.node.dataset.id=generate_workbox_id()
 
-    set_adding_workbox(work_box)
+    set_adding_workbox(workbox)
     // debugger
-    this.node.querySelector(".work_box_list").prepend(work_box.node);
-    // this.work_box_list.unshift(work_box)
+    this.node.querySelector(".workbox_list").prepend(workbox.node);
+    // this.workbox_list.unshift(workbox)
 }
 
 Category.prototype.close_btn_event = function () {
@@ -91,7 +91,7 @@ Category.prototype.render_header = function () {
     `<div class="category_header">
         <div class="category_title">
             <span>${this.title}</span>
-            <div class="category_count">${this.work_box_id_list.length}</div>
+            <div class="category_count">${this.workbox_id_list.length}</div>
         </div>
         <input maxlength=50 type="text" class="category_title_input " value="${this.title}" placeholder="제목을 입력하세요">
             

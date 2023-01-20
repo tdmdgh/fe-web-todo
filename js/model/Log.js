@@ -35,35 +35,35 @@ Log.prototype.render = function () {
 
 
 
-Log.prototype.add_workbox = function (category_title,work_box_title) {
+Log.prototype.add_workbox = function (category_title,workbox_title) {
     this.content =
-        `<b>${category_title}</b>에 <b>${work_box_title}</b>(을)를 <b>등록</b>하였습니다.`
+        `<b>${category_title}</b>에 <b>${workbox_title}</b>(을)를 <b>등록</b>하였습니다.`
 }
 Log.prototype.add_category = function (category_title) {
     this.content =
         `<b>${category_title}</b>(을)를 <b>추가</b>하였습니다.`
 }
-Log.prototype.update_workbox = function (category_title,prev_work_box_title,work_box_title) {
+Log.prototype.update_workbox = function (category_title,prev_workbox_title,workbox_title) {
     this.content =
-        `<b>${category_title}</b>의 <b>${prev_work_box_title}</b>(이)가 <b>${work_box_title}</b>(으)로 <b>변경</b>하였습니다.`
+        `<b>${category_title}</b>의 <b>${prev_workbox_title}</b>(이)가 <b>${workbox_title}</b>(으)로 <b>변경</b>하였습니다.`
 }
 Log.prototype.update_category = function (prev_category_title,category_title) {
     this.content =
         `<b>${prev_category_title}</b>(이)가 <b>${category_title}</b>(으)로 <b>변경</b>하였습니다.`
 }
-Log.prototype.remove_workbox = function (category_title,work_box_title) {
+Log.prototype.remove_workbox = function (category_title,workbox_title) {
     this.content =
-        `<b>${category_title}</b>에서 <b>${work_box_title}</b>(을)를 <b>삭제</b>하였습니다.`
+        `<b>${category_title}</b>에서 <b>${workbox_title}</b>(을)를 <b>삭제</b>하였습니다.`
 }
 Log.prototype.remove_category = function (category_title) {
     this.content =
         `<b>${category_title}</b>(을)를 <b>삭제</b>하였습니다.`
 }
-// Log.prototype.move_in_column = function (category_title,work_box_title) {
+// Log.prototype.move_in_column = function (category_title,workbox_title) {
 //     this.content =
-//         `<b>${category_title}</b>에서 <b>${work_box_title}</b>의 순서를 <b>변경</b>하였습니다.`
+//         `<b>${category_title}</b>에서 <b>${workbox_title}</b>의 순서를 <b>변경</b>하였습니다.`
 // }
-Log.prototype.move_workbox = function (work_box_title,prev_category_title,category_title) {
+Log.prototype.move_workbox = function (workbox_title,prev_category_title,category_title) {
     this.content =
-        `<b>${work_box_title}</b>(을)를 <b>${prev_category_title}</b>에서 <b>${category_title}</b>(으)로 <b>이동</b>하였습니다.`
+        `<b>${workbox_title}</b>(을)를 <b>${prev_category_title}</b>에서 <b>${category_title}</b>(으)로 <b>이동</b>하였습니다.`
 }

@@ -2,10 +2,10 @@
 import { add_category, add_log, get_category, get_workbox, remove_workbox } from "../db/storeController.js";
 import Log from "./Log.js";
 
-export default function Modal(type, work_box_id,category_id) {
+export default function Modal(type, workbox_id,category_id) {
     this.type = type;
     this.content = "";
-    this.work_box_id = work_box_id;
+    this.workbox_id = workbox_id;
     this.category_id = category_id;
     this.node;
 }
@@ -19,7 +19,7 @@ Modal.prototype.createNode = function () {
 Modal.prototype.render = function () {
     if (this.type == "del") {
         this.node.innerHTML =
-            `<div class="work_box_title ">선택한 카드를 삭제할까요?</div>
+            `<div class="workbox_title ">선택한 카드를 삭제할까요?</div>
             <div class="modal_btns">
                 <button class="modal_cancel_btn">취소</button>
                 <button class="modal_delete_btn">삭제</button>
@@ -72,11 +72,11 @@ Modal.prototype.delete_btn_event = function () {
         this.disappear();
 
         const category= get_category(this.category_id)
-        const work_box = get_workbox(this.work_box_id)
+        const workbox = get_workbox(this.workbox_id)
         const log = new Log()
-        log.remove_workbox(category.title,work_box.title);
+        log.remove_workbox(category.title,workbox.title);
         add_log(log)
         
-        remove_workbox(this.work_box_id, this.category_id)//삭제렌더링 + store데이터 수정 + 카테고리update_count
+        remove_workbox(this.workbox_id, this.category_id)//삭제렌더링 + store데이터 수정 + 카테고리update_count
     })
 }

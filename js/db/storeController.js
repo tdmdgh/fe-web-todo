@@ -3,7 +3,8 @@ import Log from "../model/Log.js";
 import WorkBox from "../model/WorkBox.js"
 import { store } from "./store.js"
 import { binarysearch_category, get_element_index } from "../utils.js";
-import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server, patch_workbox_server,patch_category_title_server, delete_category_server} from "./Fetches.js"
+import {post_workbox_server,  patch_category_server, post_Log,delete_workbox_server,
+     patch_workbox_server,patch_category_title_server, delete_category_server,post_category_server,patch_workbox_categoryID_server} from "./Fetches.js"
 
 //init이 서버에서 받아온 json 이라고 가정
 //init을 전체 프로젝트에서 사용할 store 변수에 변경, 저장 후, 프로젝트에서는 store를 사용
@@ -34,11 +35,11 @@ export function remove_category(id,title) {
     const log = new Log()
     log.remove_category(title);
     add_log(log)
-    
+
     const idx = binarysearch_category(id,store.category_list)
     //category가 갖고 있던 workbox 전부 삭제
     const category = store.category_list[idx]
-    category.work_box_id_list.forEach((id) => { store.workbox_map.delete(id); delete_workbox_server(id) })
+    category.workbox_id_list.forEach((id) => { store.workbox_map.delete(id); delete_workbox_server(id) })
     store.category_list.splice(idx,1)
     delete_category_server(id)
 }
@@ -46,36 +47,37 @@ export function remove_workbox(workbox_id,category_id) {
 
 
     const category= get_category(category_id)
-    const work_box = get_workbox(workbox_id)
+    const workbox = get_workbox(workbox_id)
     
     const target_index = get_index_of_workbox(workbox_id,category_id)
     // if(target_index>0){ // 칼럼내 워크박스가 첫번째 이후에 위치한 경우라면, 그전 워크박스의 next_id 업데이트
-    //     const prev_work_box = get_workbox(category.work_box_id_list[target_index-1])
-    //     prev_work_box.next_id = work_box.next_id
+    //     const prev_workbox = get_workbox(category.workbox_id_list[target_index-1])
+    //     prev_workbox.next_id = workbox.next_id
     // }
-    category.work_box_id_list.splice(target_index, 1);
-    work_box.node.remove()
+    category.workbox_id_list.splice(target_index, 1);
+    workbox.node.remove()
     store.workbox_map.delete(workbox_id) 
     category.update_count()
     
     const log = new Log();
-    log.remove_workbox(category.title,work_box.title)
+    log.remove_workbox(category.title,workbox.title)
     add_log(log)
 
     //서버 데이터관리
     delete_workbox_server(workbox_id)
-    patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
+    patch_category_server({category_id: category.id, workbox_id_list:category.workbox_id_list})
     // post_Log({log_content: log.content, log_time:log.time})
 }
 export function add_category(category_title) {
     const category = new Category(generate_category_id(), category_title,[]);
     category.register()
     store.category_list.push(category)
+    post_category_server({id:category.id, title:category_title})
 }
 export function add_workbox(workbox,category_id) {
     const category = get_category(category_id)
-    // workbox.next_id = category.work_box_id_list[0]??-1
-    category.work_box_id_list.unshift(workbox.id)
+    // workbox.next_id = category.workbox_id_list[0]??-1
+    category.workbox_id_list.unshift(workbox.id)
 
     store.workbox_map.set(workbox.id,workbox)
 
@@ -88,47 +90,71 @@ export function add_workbox(workbox,category_id) {
 
     //서버 데이터 관리
     post_workbox_server(workbox)
-    patch_category_server({category_id: category.id, work_box_id_list:category.work_box_id_list})
+    patch_category_server({category_id: category.id, workbox_id_list:category.workbox_id_list})
     // debugger
     // post_Log({log_content: log.content, log_time:log.time})
 
 }
-export function move_workbox(work_box_id, prev_category_id, category_id) {
+export function move_workbox(workbox_id, prev_category_id, category_id) {
         //store데이터의 선택된 workbox의 category_id 바꾸기
-        const work_box = get_workbox(work_box_id)
-        work_box.category_id = category_id
-        work_box.node.dataset.category_id = category_id
+        const workbox = get_workbox(workbox_id)
+        workbox.category_id = category_id
+        workbox.node.dataset.category_id = category_id
+        patch_workbox_categoryID_server({workbox_id: Number(workbox_id), category_id:category_id})
 
-        //이전 카테고리의 work_box_id_list 바꾸기 - 기존 워크박스id 삭제
+        //debugger
+        //이전 카테고리의 workbox_id_list 바꾸기 - 기존 워크박스id 삭제
         const prev_category = get_category(prev_category_id)
-        const delete_index = prev_category.work_box_id_list.indexOf(work_box_id)
-        prev_category.work_box_id_list.splice(delete_index,1);
-        // console.log(prev_category.work_box_id_list);
-        
+        const delete_index = prev_category.workbox_id_list.indexOf(workbox_id)
+        prev_category.workbox_id_list.splice(delete_index,1);
+        // debugger
+        patch_category_server({category_id: prev_category.id, workbox_id_list:prev_category.workbox_id_list})
+       
+        console.log("prev_category.workbox_id_list: "+prev_category.workbox_id_list)
+    
 
-        //새로운 category의 work_box_id_list 삽입
+        //새로운 category의 workbox_id_list 삽입
         const category = get_category(category_id)
         const insert_index = get_element_index(document.querySelector(".transparent"))
-        category.work_box_id_list.splice(insert_index, 0, work_box_id);
-
+        category.workbox_id_list.splice(insert_index, 0, workbox_id);
+        patch_category_server({category_id: category.id, workbox_id_list:category.workbox_id_list})
+        console.log("category.workbox_id_list: "+category.workbox_id_list)
+    
+        
         //category.upadte_count
         prev_category.update_count()
         category.update_count()
 
         //log찍기
         const log = new Log()
-        log.move_workbox(work_box.title,prev_category.title,category.title);
+        log.move_workbox(workbox.title,prev_category.title,category.title);
         add_log(log);
 
-
+    
         // console.log(store)
+}
+export function move_workbox_in_column(category_id){
+    const category = get_category(category_id)
+    const workbox_node_list = category.node.querySelector(".workbox_list").childNodes
+    let id_list = [];
+    for (let i = 0; i < workbox_node_list.length; i++) {
+        id_list.push(Number(workbox_node_list[i].dataset.id))
+        console.log(workbox_node_list[i].dataset.id)
+    }
+        console.log(category.workbox_id_list)
+        console.log(id_list)
+    // category.workbox_id_list = id_list;
+    if(category.workbox_id_list == id_list){
+        debugger
+    }category.workbox_id_list = id_list;
+    patch_category_server({category_id:category_id,workbox_id_list:id_list})
 }
 export function update_workbox(category_title,prev_workbox_title,id,workbox_title,content) {
     const log = new Log()
     log.update_workbox(category_title,prev_workbox_title,workbox_title);
     add_log(log);
     // debugger
-    patch_workbox_server({workbox_id:id,title:workbox_title,content:content})
+    patch_workbox_server({workbox_id:Number(id),title:workbox_title,content:content})
     // post_Log({log_content: log.content, log_time:log.time})
 }
 export function update_category(category_id) {
@@ -152,7 +178,7 @@ export function get_workbox(id) {
 export function add_log(log) {
     log.register();//렌더링
     store.log_list.push(log);
-    post_Log({log_content: log.content, log_time:log.time})
+    // post_Log({log_content: log.content, log_time:log.time})
 }
 export function update_logs_time() {
     // console.log(store.category_list)
@@ -176,8 +202,8 @@ export function generate_workbox_id() {
 export function get_index_of_workbox(workbox_id,category_id){
     const category= get_category(category_id)
     let target_index=-1
-    for(let i = 0; i < category.work_box_id_list.length; i++){
-        if(category.work_box_id_list[i] == workbox_id)  {
+    for(let i = 0; i < category.workbox_id_list.length; i++){
+        if(category.workbox_id_list[i] == workbox_id)  {
             target_index = i
         }
     }
@@ -218,15 +244,15 @@ function set_category_list() {
     for (const category_data of init.Categories) {
         // const category = new Category(category_data.id, category_data.title, [category_data.first_workbox_id]);
         const category = new Category(category_data.id, category_data.title, category_data.workbox_id_list);
-        // const work_box_id_list = sort_Workbox_list(category.work_box_id_list[0])
-        // category.work_box_id_list = work_box_id_list;
+        // const workbox_id_list = sort_Workbox_list(category.workbox_id_list[0])
+        // category.workbox_id_list = workbox_id_list;
         category.createNode();
         store.category_list.push(category)
     }
 }
 
 // function sort_Workbox_list(idx) {
-//     //(store.workbox_map)참조해서 category.work_box_id_list에 id만 삽입하기
+//     //(store.workbox_map)참조해서 category.workbox_id_list에 id만 삽입하기
 //     let wb_linked_list = [];
 //     let workbox = get_workbox(idx)
 

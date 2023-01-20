@@ -60,6 +60,20 @@ function post_workbox_server(workbox) {
         }),
     })
 }
+function post_category_server({category_id,title}) {
+    // debugger
+    fetch("http://localhost:3000/Categories", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            id: category_id,
+            title: title,
+            workbox_id_list:[]
+        }),
+    })
+}
 function delete_workbox_server(workbox_id) {
     fetch("http://localhost:3000/WorkBoxes/"+workbox_id, {
         method: "DELETE",
@@ -70,11 +84,11 @@ function delete_category_server(category_id) {
         method: "DELETE",
     })
 }
-function patch_category_server({category_id,work_box_id_list}) {
+function patch_category_server({category_id,workbox_id_list}) {
     fetch("http://localhost:3000/Categories/"+category_id, {
         method: 'PATCH',
         body: JSON.stringify({
-            workbox_id_list: work_box_id_list,
+            workbox_id_list: workbox_id_list,
         }),
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
@@ -106,7 +120,6 @@ function post_Log({log_content,log_time}){
     // debugger
 }
 function patch_workbox_server({workbox_id,title,content}) {
-    debugger
     fetch("http://localhost:3000/WorkBoxes/"+workbox_id, {
         method: 'PATCH',
         body: JSON.stringify({
@@ -116,9 +129,21 @@ function patch_workbox_server({workbox_id,title,content}) {
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         },
-    }).then((resp)=>resp.json()).catch((err)=>console.error(err))
+    })
+}
+function patch_workbox_categoryID_server({workbox_id,category_id}) {
+    // debugger
+    fetch("http://localhost:3000/WorkBoxes/"+workbox_id, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            category_id: category_id,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
 }
 export {
     get_JSONData, post_workbox_server,patch_category_server,post_Log,delete_workbox_server,patch_workbox_server,patch_category_title_server,
-    delete_category_server
+    delete_category_server,post_category_server,patch_workbox_categoryID_server
 }

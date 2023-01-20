@@ -18,7 +18,7 @@ export default function WorkBox(id=0, category_id,) {
 
 WorkBox.prototype.createNode = function () {
     this.node = document.createElement('li')
-    this.node.classList.add("work_box")
+    this.node.classList.add("workbox")
     this.node.dataset.id=this.id
     this.node.dataset.category_id=this.category_id
     this.render();
@@ -42,17 +42,17 @@ WorkBox.prototype.register_btn_event = function () {
     this.content = newline2br(this.textarea_value);//<br>바꿔주기
 
 
-    const work_box_title = this.node.querySelector(".work_box_title");
-    const work_box_main = this.node.querySelector(".work_box_main");
-    work_box_title.innerHTML = this.title;
-    work_box_main.innerHTML = this.content;
+    const workbox_title = this.node.querySelector(".workbox_title");
+    const workbox_main = this.node.querySelector(".workbox_main");
+    workbox_title.innerHTML = this.title;
+    workbox_main.innerHTML = this.content;
 
     this.node.classList.remove("adding");
 
     if (this.node.classList.contains("editing")) {
         this.node.classList.remove("editing");
         update_workbox(category.title,prev_title,this.id,this.title,this.content) //log 생성 
-        debugger
+        // debugger
         return
     }
     category.update_count();
@@ -67,11 +67,11 @@ WorkBox.prototype.delete_btn_event = function () {
 }
 
 WorkBox.prototype.set_input = function(e){
-    this.input_value = this.node.querySelector(".work_box_title_input").value;
-    this.textarea_value = this.node.querySelector(".work_box_main_input").value;
+    this.input_value = this.node.querySelector(".workbox_title_input").value;
+    this.textarea_value = this.node.querySelector(".workbox_main_input").value;
 }
 WorkBox.prototype.resize_content_area = function(e){
-    resize_textarea(this.node.querySelector(".work_box_main_input"));
+    resize_textarea(this.node.querySelector(".workbox_main_input"));
 }
 WorkBox.prototype.input_check = function(e){
     if (this.input_value.length > 0 && this.textarea_value.length > 0)
@@ -87,7 +87,7 @@ WorkBox.prototype.input_check = function(e){
     }
 }
 WorkBox.prototype.register_cancel_btn_event = function () {
-    // this.category.work_box_list.shift()
+    // this.category.workbox_list.shift()
     clear_adding_workbox()
     this.node.remove();
 }
@@ -100,8 +100,8 @@ WorkBox.prototype.edit_btn_event = function () {
         regi_btn.classList.add("ready");
         this.input_value = this.title;
         this.textarea_value = br2newline(this.content);
-        this.node.querySelector(".work_box_title_input").value = this.input_value;
-        this.node.querySelector(".work_box_main_input").value = this.textarea_value;
+        this.node.querySelector(".workbox_title_input").value = this.input_value;
+        this.node.querySelector(".workbox_main_input").value = this.textarea_value;
     }
 }
 WorkBox.prototype.edit_cancel_btn_event = function () {
@@ -109,8 +109,8 @@ WorkBox.prototype.edit_cancel_btn_event = function () {
     this.node.classList.remove("adding")
     this.input_value = this.title;
     this.textarea_value = this.content;
-    this.node.querySelector(".work_box_title_input").value = this.input_value;
-    this.node.querySelector(".work_box_main_input").value = this.textarea_value;
+    this.node.querySelector(".workbox_title_input").value = this.input_value;
+    this.node.querySelector(".workbox_main_input").value = this.textarea_value;
 }
 WorkBox.prototype.say = function () {
     console.log("hoh")
@@ -132,10 +132,10 @@ WorkBox.prototype.drag_start = function (e) {
     floating_node.dataset.drag_start_y = e.pageY
     floating_node.dataset.position_x = window.pageXOffset + clientRect.left
     floating_node.dataset.position_y = window.pageYOffset + clientRect.top
-//    const f_work_box = new FloatingWorkBox(floating_node)
-//    const f_work_box = new FloatingWorkBox()
-//    f_work_box.setnode(floating_node)
-//    f_work_box.shownode()
+//    const f_workbox = new FloatingWorkBox(floating_node)
+//    const f_workbox = new FloatingWorkBox()
+//    f_workbox.setnode(floating_node)
+//    f_workbox.shownode()
     this.node.before(floating_node)
     // this.node.style.visibility ="hiddend"
     // set_floating_workbox(floating_node)
@@ -154,20 +154,20 @@ WorkBox.prototype.drag_start = function (e) {
 
 WorkBox.prototype.render = function () {
     this.node.innerHTML =
-        `<div class="work_box_row ">
-            <div class="work_box_contents ">
-                <input type="text" class="work_box_title_input " value="" placeholder="제목을 입력하세요">
-                <textarea rows="1" class="work_box_main_input " value="" placeholder="내용을 입력하세요"></textarea>
-                <div class="work_box_title ">${this.title}</div>
-                <div class="work_box_main ">${this.content}</div>
-                <div class="work_box_author ">author by ${this.author}</div>
+        `<div class="workbox_row ">
+            <div class="workbox_contents ">
+                <input type="text" class="workbox_title_input " value="" placeholder="제목을 입력하세요">
+                <textarea rows="1" class="workbox_main_input " value="" placeholder="내용을 입력하세요"></textarea>
+                <div class="workbox_title ">${this.title}</div>
+                <div class="workbox_main ">${this.content}</div>
+                <div class="workbox_author ">author by ${this.author}</div>
             </div>
-            <div class="work_box_icon">
+            <div class="workbox_icon">
                 <img class="box_delete_icon" src="./assets/box_delete_icon.svg" alt="">
                 <img class="box_edit_icon" src="./assets/edit_icon.svg" alt="">
             </div>
         </div>
-        <div class="work_box_buttons ">
+        <div class="workbox_buttons ">
             <button class="add_cancel_button">취소</button>
             <button class="add_register_button">등록</button>
         </div>
