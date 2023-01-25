@@ -13,7 +13,7 @@
     --btn-general-color: #0075DE;
     --btn-cliked-color: #00529B;
     --btn-unfocused-color: #86C6FF;
-    --btn-unfocused-text-color: rgba(255, 255, 255, 0.4);
+    --btn-unfocused-text-color: #ffffff66;
     -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
@@ -377,7 +377,7 @@ button {
 
 .add_register_button.ready {
 
-    color: white;
+    color: #ffffff;
     background-color: var(--btn-general-color);
     transition: 0.7s;
 }

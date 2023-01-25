@@ -5,15 +5,14 @@
 - [ ] Css 정리하기: border, background 수정
 - [ ] Css 정리하기: 중복 제거(cascading활용)
 - [ ] Css 정리하기: css파일 나누기
-- [ ] Log class의 time 로직 구현: 
+- [x] Log class의 time 로직 구현: 
     - 사이드바 버튼을 누를 때마다, 모든 로그 들의 시간텍스트가 업데이트 되야됨
     - 그러기 위해서 Log_List를 만들어서 관리할까 생각중임
 - [ ] 템플릿 모듈 이용해서 리펙토링
-- [ ] 드래그 앤 드랍: 같은 칼럼내 이동
-- [ ] 드래그 앤 드랍: 다른 칼럼내 이동
-- [ ] 카테고리 이름 바꿀 때, 현재 엔터가 trigger임. input 태그 이외에 부분을 클릭하는 것으로 저장되는 것이 요구사항.
-- [ ] text area, input area 수정시에 placeholder에 기존 텍스트 저장
-- [ ] inputcheck trim 기능
+- [x] 드래그 앤 드랍: 같은 칼럼내 이동
+- [x] 드래그 앤 드랍: 다른 칼럼내 이동
+- [ ] 카테고리 이름 바꿀 때, 현재 click이 trigger임.
+- [ ] 드래그 할 때, 시작 위치와 끝나는 위치가 같으면 fetch하지 않는 조건문 추가하기
 ## 2. Term
 **Work_Box: 카드 하나**  
 **Category: 카테고리 이름과 Work_Box 리스트로 구성되어 있음.**  
@@ -71,9 +70,10 @@ action에 따라 텍스트 내용이 달라짐.
 4. category 수정
 5. workbox 삭제
 6. category 삭제
-- [ ] 7.  workbox 이동 알림 (진행 중)
+7.  workbox 이동 알림 (진행 중)
 
 ## 5. 특이사항
 각 클래스 안에 node라는 변수를 가지고 있다.  
 값을 수정하거나, 삭제, 추가 등을 할 때, this.node를 활용해서 기능을 수행한다.  
 ex) this.node.remove(), this.node.classList.add("edit") 등 이런 식으로 활용 가능하다.
+model과 view 관계를 좀 더 느슨하게 할 필요가 있다. 추가적으로 리펙토링이 필요.
