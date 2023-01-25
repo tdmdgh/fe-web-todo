@@ -153,16 +153,17 @@ ul {
 }
 
 /* work box */
-.work_box_list {
+.workbox_list {
     list-style: none;
     margin: 0px;
     padding: 0px;
     max-width: 250px;
     width: 100%;
     height: 100%;
+    transition: 1s;
 }
 
-.work_box {
+.workbox {
     /* border: 1px solid var(--work-box-color); */
     display: flex;
 
@@ -178,33 +179,60 @@ ul {
     margin: 8px 0;
     padding: 8px;
 }
-.work_box.drag{
+.workbox.floating{
     position: absolute;
     z-index: 1;
     margin: 0;
     box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255);
+    opacity: 0.8;
+    transition: 0s;
+    pointer-events: none;
 }
-.work_box.vacant{
+.workbox.transparent{
     opacity: 0.8;
     border: 1px solid var(--btn-general-color);
     z-index: 0;
+    /* pointer-events: none; */
+    /* transition: 1s; */
 }
-.work_box.editing {
+/* .workbox.transparent.destination{
+    display: none;
+} */
+
+.workbox.transparent.start.hidden{
+    visibility: hidden;
+}
+.workbox.transparent.destination.active{
+    display: flex;
+    transition: 1s;
+}
+.workbox.transparent.destination.hidden{
+    visibility: none;
+    transition: 1s;
+}
+.workbox.drag_end{
+    /* opacity: 0; */
+    /* border: 1px solid var(--btn-general-color); */
+    /* z-index: 0; */
+    box-shadow: none;
+    transition: 0.1s;
+}
+.workbox.editing {
     border: 1px solid var(--btn-general-color);
 }
 
-.work_box.delete {
+.workbox.delete {
     border: 1px solid red;
     background: var(--work-box-delete-color);
 }
 
-.work_box_row {
+.workbox_row {
     border: 2px solid #0088ff;
     display: flex;
 }
 
-.work_box_contents {
+.workbox_contents {
     /* position: relative; */
     display: flex;
     flex-direction: column;
@@ -218,11 +246,11 @@ ul {
 textarea {
     overflow: hidden;
 }
-.work_box_contents>* {
+.workbox_contents>* {
     outline: none;
 }
 
-.work_box_icon {
+.workbox_icon {
 
     display: flex;
     flex-direction: column;
@@ -234,7 +262,7 @@ textarea {
     margin: 8px 8px 0 0;
 }
 
-.work_box_icon>img {
+.workbox_icon>img {
     margin-bottom: 10px;
 }
 
@@ -248,18 +276,18 @@ textarea {
     transition: 0;
 }
 
-/* .work_box_icon:hover ~.work_box{
+/* .workbox_icon:hover ~.workbox{
     border: 1px solid red;
 } */
 
-.work_box_title {
+.workbox_title {
     display: flex;
     line-height: 23px;
     font-weight: var(--font-weight-title);
     font-size: 16px;
 }
 
-/* .work_box_title_input */
+/* .workbox_title_input */
 input {
     display: none;
     outline: none;
@@ -271,13 +299,14 @@ input {
     margin: 0;
 }
 
-.work_box_main {
+.workbox_main {
     display: flex;
     line-height: 20px;
     font-size: 14px;
+    min-height: 20px;
 }
 
-.work_box_main_input {
+.workbox_main_input {
     resize: none;
     display: none;
     border: 0;
@@ -287,7 +316,7 @@ input {
     margin: 0;
 }
 
-.work_box_author {
+.workbox_author {
     display: flex;
     font-size: 12px;
     line-height: 17px;
@@ -295,12 +324,12 @@ input {
 }
 
 /* work box 버튼 */
-.work_box_buttons {
+.workbox_buttons {
     display: none;
     justify-content: space-between;
 }
 
-/* .work_box_buttons >  */
+/* .workbox_buttons >  */
 button {
     cursor: pointer;
     width: 100%;
@@ -360,27 +389,27 @@ button {
 
 
 /* work box 추가 */
-.adding .work_box_title_input {
+.adding .workbox_title_input {
     display: flex;
 }
 
-.adding .work_box_main_input {
+.adding .workbox_main_input {
     display: flex;
 }
 
-.adding .work_box_title {
+.adding .workbox_title {
     display: none;
 }
 
-.adding .work_box_main {
+.adding .workbox_main {
     display: none;
 }
 
-.adding .work_box_author {
+.adding .workbox_author {
     display: none;
 }
 
-.adding .work_box_icon {
+.adding .workbox_icon {
     display: none;
 }
 
@@ -388,7 +417,7 @@ button {
     display: flex;
 }
 
-.adding .work_box_buttons {
+.adding .workbox_buttons {
     display: flex;
 }
 
@@ -423,8 +452,8 @@ button {
     top: 0;
     left: 0;
 
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
 
     display: none;
     background-color: rgba(0, 0, 0, 0.4);
