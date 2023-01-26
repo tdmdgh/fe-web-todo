@@ -4,23 +4,26 @@
       "title": "해야할 일",
       "id": 0,
       "workbox_id_list": [
-        1
+        4,
+        3,
+        1,
+        2
       ]
     },
     {
-      "title": "하고 있는 일",
+      "title": "이게dfadsfa",
       "id": 1,
-      "workbox_id_list": [
-        2,
-        3
-      ]
+      "workbox_id_list": []
     },
     {
       "title": "완료한 일",
       "id": 2,
-      "workbox_id_list": [
-        4
-      ]
+      "workbox_id_list": []
+    },
+    {
+      "title": "123132",
+      "workbox_id_list": [],
+      "id": 3
     }
   ],
   "WorkBoxes": [
@@ -40,23 +43,23 @@
     },
     {
       "id": 2,
-      "category_id": 1,
-      "title": "제목",
-      "content": "내용",
+      "category_id": 0,
+      "title": "21313",
+      "content": "123131312321",
       "author": "web"
     },
     {
       "id": 3,
-      "category_id": 1,
-      "title": "d",
-      "content": "d",
+      "category_id": 0,
+      "title": "qwqw",
+      "content": "qwwq",
       "author": "web"
     },
     {
       "id": 4,
-      "category_id": 2,
-      "title": "re",
-      "content": "r",
+      "category_id": 0,
+      "title": "w12213",
+      "content": "123132",
       "author": "web"
     }
   ],
