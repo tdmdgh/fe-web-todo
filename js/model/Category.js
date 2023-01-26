@@ -1,6 +1,7 @@
 import { add_log, get_workbox, remove_category, generate_workbox_id, set_adding_workbox} from "../db/storeController.js";
 import Log from "./Log.js";
 import WorkBox from "./WorkBox.js";
+
 export default function Category(id,title,workbox_list=[]) {
     this.title = title;
     this.id = id;
@@ -10,6 +11,7 @@ export default function Category(id,title,workbox_list=[]) {
 Category.prototype.setTitle = function(title) {
     this.title = title;
 }
+
 Category.prototype.register = function() {
     this.createNode();
     const category_list = document.querySelector('.category_list');
